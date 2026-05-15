@@ -11,10 +11,10 @@ import { Observable } from 'rxjs';
 export class Receipt {
 
   // =========================
-  // BACKEND API URL
+  // LIVE BACKEND API URL
   // =========================
 
-  apiUrl = 'http://localhost:3000';
+  apiUrl = 'https://repair-shop-management.onrender.com';
 
   constructor(
     private http: HttpClient
