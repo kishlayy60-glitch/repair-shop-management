@@ -1,0 +1,207 @@
+<div class="container">
+
+  <h1>Check Repair Status</h1>
+
+
+
+  <!-- SERIAL NUMBER -->
+
+  <input
+    type="text"
+    placeholder="Enter Serial No"
+    [(ngModel)]="serialNo"
+    class="input-box"
+  >
+
+
+  <p class="or-text">OR</p>
+
+
+
+  <!-- MOBILE NUMBER -->
+
+  <input
+    type="text"
+    placeholder="Enter Mobile Number"
+    [(ngModel)]="mobileNo"
+    class="input-box"
+  >
+
+
+
+  <!-- BUTTON -->
+
+  <button
+    class="check-btn"
+    (click)="checkStatus()"
+  >
+    Check Status
+  </button>
+
+
+
+
+
+  <!-- SINGLE RECEIPT -->
+
+  <div
+    class="receipt-card"
+    *ngIf="receipt"
+  >
+
+    <h2>Receipt Details</h2>
+
+    <div class="receipt-row">
+
+      <p>
+        <b>Serial No:</b>
+        {{ receipt.serialNo }}
+      </p>
+
+      <p>
+        <b>Customer Name:</b>
+        {{ receipt.customerName }}
+      </p>
+
+    </div>
+
+
+
+    <div class="receipt-row">
+
+      <p>
+        <b>Mobile No:</b>
+        {{ receipt.mobileNo }}
+      </p>
+
+      <p>
+        <b>Repair Material:</b>
+        {{ receipt.repairMaterial }}
+      </p>
+
+    </div>
+
+
+
+    <div class="receipt-row">
+
+      <p>
+        <b>Repair By:</b>
+        {{ receipt.repairBy }}
+      </p>
+
+      <p>
+        <b>Cost:</b>
+        ₹{{ receipt.cost }}
+      </p>
+
+    </div>
+
+
+
+    <div class="receipt-row">
+
+      <p>
+        <b>Status:</b>
+        <span
+          [ngClass]="{
+            'pending': receipt.repairStatus === 'Pending',
+            'completed': receipt.repairStatus === 'Completed'
+          }"
+        >
+          {{ receipt.repairStatus }}
+        </span>
+      </p>
+
+    </div>
+
+  </div>
+
+
+
+
+
+  <!-- MULTIPLE RECEIPTS -->
+
+  <div *ngIf="receipts.length > 0">
+
+    <h2 class="table-title">
+
+      Customer Receipts
+
+    </h2>
+
+
+
+    <table>
+
+      <thead>
+
+        <tr>
+
+          <th>Serial No</th>
+
+          <th>Material</th>
+
+          <th>Repair By</th>
+
+          <th>Cost</th>
+
+          <th>Status</th>
+
+        </tr>
+
+      </thead>
+
+
+
+      <tbody>
+
+        <tr *ngFor="let item of receipts">
+
+          <td>{{ item.serialNo }}</td>
+
+          <td>{{ item.repairMaterial }}</td>
+
+          <td>{{ item.repairBy }}</td>
+
+          <td>₹{{ item.cost }}</td>
+
+          <td>
+
+            <span
+              [ngClass]="{
+                'pending': item.repairStatus === 'Pending',
+                'completed': item.repairStatus === 'Completed'
+              }"
+            >
+              {{ item.repairStatus }}
+            </span>
+
+          </td>
+
+        </tr>
+
+      </tbody>
+
+    </table>
+
+
+
+    <!-- TOTAL COST -->
+
+    <div class="total-box">
+
+      Total Repair Cost :
+
+      <span>
+
+        ₹{{ totalCost }}
+
+      </span>
+
+    </div>
+
+  </div>
+
+</div>

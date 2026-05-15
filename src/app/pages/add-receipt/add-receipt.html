@@ -1,0 +1,285 @@
+<div class="container">
+
+  <h1>Repair Receipt</h1>
+
+  <!-- CURRENT DATE -->
+
+  <p class="date">
+
+    Date :
+    {{ currentDate | date:'dd/MM/yyyy' }}
+
+  </p>
+
+
+
+  <!-- FORM -->
+
+  <form
+    [formGroup]="receiptForm"
+    (ngSubmit)="saveReceipt()"
+  >
+
+    <!-- SERIAL -->
+
+    <input
+      type="text"
+      placeholder="Serial No *"
+      formControlName="serialNo"
+    >
+
+
+
+    <!-- CUSTOMER NAME -->
+
+    <input
+      type="text"
+      placeholder="Customer Name *"
+      formControlName="customerName"
+    >
+
+
+
+    <!-- MOBILE -->
+
+    <input
+      type="text"
+      placeholder="Mobile Number *"
+      maxlength="10"
+      formControlName="mobileNo"
+    >
+
+
+
+    <!-- MOBILE VALIDATION -->
+
+    <small
+      class="error"
+      *ngIf="
+        receiptForm.get('mobileNo')?.invalid &&
+        receiptForm.get('mobileNo')?.touched
+      "
+    >
+
+      Enter Valid 10 Digit Mobile Number
+
+    </small>
+
+
+
+    <!-- MATERIAL -->
+
+    <input
+      type="text"
+      placeholder="Repair Material *"
+      formControlName="repairMaterial"
+    >
+
+
+
+    <!-- COST OPTIONAL -->
+
+    <input
+      type="number"
+      placeholder="Cost (Optional)"
+      formControlName="cost"
+    >
+
+
+
+    <!-- REPAIR BY OPTIONAL -->
+
+    <input
+      type="text"
+      placeholder="Repair By (Optional)"
+      formControlName="repairBy"
+    >
+
+
+
+    <!-- STATUS -->
+
+    <select formControlName="repairStatus">
+
+      <option value="Pending">
+        Pending
+      </option>
+
+      <option value="Completed">
+        Completed
+      </option>
+
+    </select>
+
+
+
+    <!-- SAVE -->
+
+    <button
+      type="submit"
+      [disabled]="loading"
+    >
+
+      {{ loading ? 'Saving...' : 'Save Receipt' }}
+
+    </button>
+
+  </form>
+
+
+
+
+
+  <!-- RECEIPT PREVIEW -->
+
+  <div
+    class="receipt-preview"
+    id="receipt-content"
+  >
+
+    <h2>SONAM ELECTRONICS</h2>
+
+    <p class="address">
+
+      Repair Receipt
+
+    </p>
+
+
+
+    <!-- DATE -->
+
+    <p>
+
+      <b>Date :</b>
+
+      {{ currentDate | date:'dd/MM/yyyy' }}
+
+    </p>
+
+
+
+    <hr>
+
+
+
+    <p>
+
+      <b>Serial No :</b>
+
+      {{ receiptForm.value.serialNo }}
+
+    </p>
+
+
+
+    <p>
+
+      <b>Customer Name :</b>
+
+      {{ receiptForm.value.customerName }}
+
+    </p>
+
+
+
+    <p>
+
+      <b>Mobile Number :</b>
+
+      {{ receiptForm.value.mobileNo }}
+
+    </p>
+
+
+
+    <p>
+
+      <b>Repair Material :</b>
+
+      {{ receiptForm.value.repairMaterial }}
+
+    </p>
+
+
+
+    <p>
+
+      <b>Cost :</b>
+
+      ₹{{ receiptForm.value.cost || 0 }}
+
+    </p>
+
+
+
+    <p>
+
+      <b>Repair By :</b>
+
+      {{ receiptForm.value.repairBy || 'Not Assigned' }}
+
+    </p>
+
+
+
+    <p>
+
+      <b>Status :</b>
+
+      {{ receiptForm.value.repairStatus }}
+
+    </p>
+
+
+
+    <hr>
+
+
+
+    <h3>
+
+      Thank You Visit Again
+
+    </h3>
+
+  </div>
+
+
+
+
+
+  <!-- ACTION BUTTONS -->
+
+  <div class="action-buttons">
+
+    <!-- PRINT -->
+
+    <button
+      class="print-btn"
+      (click)="printReceipt()"
+      type="button"
+    >
+
+      Print Receipt
+
+    </button>
+
+<br>
+<br>
+
+    <!-- PDF -->
+
+    <button
+      class="pdf-btn"
+      (click)="downloadPDF()"
+      type="button"
+    >
+
+      Download PDF
+
+    </button>
+
+  </div>
+
+</div>

@@ -1,0 +1,41 @@
+<div class="container">
+
+  <div class="login-box">
+
+    <h1>Admin Login</h1>
+
+
+
+    <!-- EMAIL -->
+
+    <input
+      type="email"
+      placeholder="Enter Email"
+      [(ngModel)]="email"
+    >
+
+
+
+    <!-- PASSWORD -->
+
+    <input
+      type="password"
+      placeholder="Enter Password"
+      [(ngModel)]="password"
+    >
+
+
+
+    <!-- BUTTON -->
+
+    <button
+      (click)="login()"
+    >
+
+      {{ loading ? 'Please Wait...' : 'Login' }}
+
+    </button>
+
+  </div>
+
+</div>

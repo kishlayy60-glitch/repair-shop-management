@@ -1,0 +1,23 @@
+.container{
+  width: 400px;
+  margin: 50px auto;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+h1{
+  text-align: center;
+}
+
+input,button{
+  padding: 12px;
+  font-size: 16px;
+}
+
+button{
+  background: black;
+  color: white;
+  border: none;
+  cursor: pointer;
+}

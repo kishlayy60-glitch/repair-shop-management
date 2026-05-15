@@ -1,0 +1,255 @@
+<div class="container">
+
+  <h1>Update Receipt Status</h1>
+
+
+
+  <!-- =========================
+       EDIT FORM
+  ========================== -->
+
+  <div
+    class="edit-form"
+    *ngIf="editMode"
+  >
+
+    <h2>Edit Receipt</h2>
+
+
+
+    <input
+      type="text"
+      placeholder="Serial No"
+      [(ngModel)]="selectedReceipt.serialNo"
+    >
+
+
+
+    <input
+      type="text"
+      placeholder="Customer Name"
+      [(ngModel)]="selectedReceipt.customerName"
+    >
+
+
+
+    <input
+      type="text"
+      placeholder="Mobile Number"
+      maxlength="10"
+      [(ngModel)]="selectedReceipt.mobileNo"
+    >
+
+
+
+    <input
+      type="text"
+      placeholder="Repair Material"
+      [(ngModel)]="selectedReceipt.repairMaterial"
+    >
+
+
+
+    <input
+      type="number"
+      placeholder="Cost"
+      [(ngModel)]="selectedReceipt.cost"
+    >
+
+
+
+    <input
+      type="text"
+      placeholder="Repair By"
+      [(ngModel)]="selectedReceipt.repairBy"
+    >
+
+
+
+    <select
+      [(ngModel)]="selectedReceipt.repairStatus"
+    >
+
+      <option value="Pending">
+        Pending
+      </option>
+
+      <option value="Completed">
+        Completed
+      </option>
+
+    </select>
+
+
+
+    <!-- EDIT ACTION -->
+
+    <div class="edit-actions">
+
+      <button
+        class="update-btn"
+        (click)="updateReceipt()"
+      >
+        Update Receipt
+      </button>
+
+
+
+      <button
+        class="cancel-btn"
+        (click)="cancelEdit()"
+      >
+        Cancel
+      </button>
+
+    </div>
+
+  </div>
+
+
+
+
+
+  <!-- =========================
+       SEARCH
+  ========================== -->
+
+  <input
+    type="text"
+    placeholder="Search by Serial No or Name"
+    [(ngModel)]="searchText"
+    (input)="searchReceipt()"
+    class="search-box"
+  >
+
+
+
+
+
+  <!-- =========================
+       TABLE
+  ========================== -->
+
+  <table>
+
+    <thead>
+
+      <tr>
+
+        <th>Serial</th>
+
+        <th>Name</th>
+
+        <th>Mobile</th>
+
+        <th>Material</th>
+
+        <th>Cost</th>
+
+        <th>Status</th>
+
+        <th>Action</th>
+
+      </tr>
+
+    </thead>
+
+
+
+    <tbody>
+
+      <tr *ngFor="let item of filteredReceipts">
+
+        <td>{{ item.serialNo }}</td>
+
+        <td>{{ item.customerName }}</td>
+
+        <td>{{ item.mobileNo }}</td>
+
+        <td>{{ item.repairMaterial }}</td>
+
+        <td>₹{{ item.cost }}</td>
+
+
+
+        <!-- STATUS -->
+
+        <td>
+
+          <select [(ngModel)]="item.repairStatus">
+
+            <option value="Pending">
+              Pending
+            </option>
+
+            <option value="Completed">
+              Completed
+            </option>
+
+          </select>
+
+        </td>
+
+
+
+        <!-- ACTION -->
+
+        <td>
+
+          <!-- EDIT -->
+
+          <button
+            class="edit-btn"
+            (click)="editReceipt(item)"
+          >
+            Edit
+          </button>
+
+
+
+          <!-- UPDATE -->
+
+          <button
+            class="update-btn"
+            (click)="updateStatus(item)"
+          >
+            Update
+          </button>
+
+
+
+          <!-- DELETE -->
+
+          <button
+            class="delete-btn"
+            (click)="deleteReceipt(item._id)"
+          >
+            Delete
+          </button>
+
+        </td>
+
+      </tr>
+
+    </tbody>
+
+  </table>
+
+
+
+
+
+  <!-- =========================
+       NO DATA
+  ========================== -->
+
+  <div
+    class="no-data"
+    *ngIf="filteredReceipts.length === 0"
+  >
+
+    No Receipts Found
+
+  </div>
+
+</div>

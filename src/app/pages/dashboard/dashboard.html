@@ -1,0 +1,273 @@
+<div class="dashboard-container">
+
+  <!-- TITLE -->
+
+  <h1 class="title">
+
+    Admin Dashboard
+
+  </h1>
+
+
+
+  <!-- LOADING -->
+
+  <div
+    class="loading"
+    *ngIf="loading"
+  >
+
+    Loading Dashboard...
+
+  </div>
+
+
+
+
+
+  <!-- DASHBOARD CONTENT -->
+
+  <div *ngIf="!loading">
+
+
+
+    <!-- =========================
+         DASHBOARD CARDS
+    ========================== -->
+
+    <div class="cards">
+
+
+
+      <!-- TOTAL -->
+
+      <div class="card total-card">
+
+        <h2>Total Receipts</h2>
+
+        <h1>{{ totalReceipts }}</h1>
+
+      </div>
+
+
+
+      <!-- PENDING -->
+
+      <div class="card pending-card">
+
+        <h2>Pending Repairs</h2>
+
+        <h1>{{ pendingReceipts }}</h1>
+
+      </div>
+
+
+
+      <!-- COMPLETED -->
+
+      <div class="card completed-card">
+
+        <h2>Completed Repairs</h2>
+
+        <h1>{{ completedReceipts }}</h1>
+
+      </div>
+
+
+
+      <!-- REVENUE -->
+
+      <div class="card revenue-card">
+
+        <h2>Total Revenue</h2>
+
+        <h1>₹{{ totalRevenue }}</h1>
+
+      </div>
+
+    </div>
+
+
+
+
+
+    <!-- =========================
+         FILTER BUTTONS
+    ========================== -->
+
+    <div class="filter-buttons">
+
+
+
+      <button
+        class="all-btn"
+        (click)="filterStatus('All')"
+      >
+        All
+      </button>
+
+
+
+      <button
+        class="pending-btn"
+        (click)="filterStatus('Pending')"
+      >
+        Pending
+      </button>
+
+
+
+      <button
+        class="completed-btn"
+        (click)="filterStatus('Completed')"
+      >
+        Completed
+      </button>
+
+    </div>
+
+
+
+
+
+    <!-- =========================
+         RECENT RECEIPTS
+    ========================== -->
+
+    <div class="recent-section">
+
+      <h2>Recent Receipts</h2>
+
+
+
+      <table>
+
+        <thead>
+
+          <tr>
+
+            <th>Serial No</th>
+
+            <th>Name</th>
+
+            <th>Mobile</th>
+
+            <th>Material</th>
+
+            <th>Repair By</th>
+
+            <th>Cost</th>
+
+            <th>Status</th>
+
+          </tr>
+
+        </thead>
+
+
+
+        <tbody>
+
+          <tr *ngFor="let item of filteredReceipts">
+
+            <!-- SERIAL -->
+
+            <td>
+
+              {{ item.serialNo }}
+
+            </td>
+
+
+
+            <!-- NAME -->
+
+            <td>
+
+              {{ item.customerName }}
+
+            </td>
+
+
+
+            <!-- MOBILE -->
+
+            <td>
+
+              {{ item.mobileNo }}
+
+            </td>
+
+
+
+            <!-- MATERIAL -->
+
+            <td>
+
+              {{ item.repairMaterial }}
+
+            </td>
+
+
+
+            <!-- REPAIR BY -->
+
+            <td>
+
+              {{ item.repairBy || 'Not Assigned' }}
+
+            </td>
+
+
+
+            <!-- COST -->
+
+            <td>
+
+              ₹{{ item.cost || 0 }}
+
+            </td>
+
+
+
+            <!-- STATUS -->
+
+            <td>
+
+              <span
+                [ngClass]="{
+                  'pending': item.repairStatus === 'Pending',
+                  'completed': item.repairStatus === 'Completed'
+                }"
+              >
+
+                {{ item.repairStatus }}
+
+              </span>
+
+            </td>
+
+          </tr>
+
+        </tbody>
+
+      </table>
+
+
+
+      <!-- NO DATA -->
+
+      <div
+        class="no-data"
+        *ngIf="filteredReceipts.length === 0"
+      >
+
+        No Receipts Found
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>

@@ -1,0 +1,64 @@
+<nav class="navbar">
+
+  <!-- LOGO -->
+
+  <div
+    class="logo"
+    routerLink="/"
+  >
+    SONAM ELECTRONICS
+  </div>
+
+
+
+  <!-- MENU -->
+
+  <div class="menu">
+
+
+
+    <!-- BEFORE LOGIN -->
+
+    <ng-container *ngIf="!isLoggedIn">
+
+      <a routerLink="/">
+        Receipt Status
+      </a>
+
+      <a routerLink="/login">
+        Login
+      </a>
+
+    </ng-container>
+
+
+
+
+    <!-- AFTER LOGIN -->
+
+    <ng-container *ngIf="isLoggedIn">
+
+      <a routerLink="/dashboard">
+        Dashboard
+      </a>
+
+      <a routerLink="/add-receipt">
+        Add Receipt
+      </a>
+
+      <a routerLink="/update-status">
+        Update Status
+      </a>
+
+      <a
+        class="logout-btn"
+        (click)="logout()"
+      >
+        Logout
+      </a>
+
+    </ng-container>
+
+  </div>
+
+</nav>
