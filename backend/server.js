@@ -1,4 +1,4 @@
-const twilio = require('twilio');
+const axios = require('axios');
 
 const express = require('express');
 
@@ -13,7 +13,6 @@ const Receipt = require('./models/Receipt');
 const app = express();
 
 
-
 // =====================================
 // MIDDLEWARE
 // =====================================
@@ -21,8 +20,6 @@ const app = express();
 app.use(cors());
 
 app.use(express.json());
-
-
 
 
 // =====================================
@@ -46,21 +43,61 @@ mongoose.connect(process.env.MONGO_URL)
 });
 
 
-
-
 // =====================================
-// TWILIO CONFIG
+// META WHATSAPP FUNCTION
 // =====================================
 
-const client = twilio(
+async function sendWhatsAppMessage(to, message) {
 
-  process.env.TWILIO_ACCOUNT_SID,
+  try {
 
-  process.env.TWILIO_AUTH_TOKEN
+    await axios.post(
 
-);
+      `https://graph.facebook.com/v22.0/${process.env.PHONE_NUMBER_ID}/messages`,
 
+      {
 
+        messaging_product: "whatsapp",
+
+        to: `91${to}`,
+
+        type: "text",
+
+        text: {
+
+          body: message
+
+        }
+
+      },
+
+      {
+
+        headers: {
+
+          Authorization: `Bearer ${process.env.WHATSAPP_TOKEN}`,
+
+          "Content-Type": "application/json"
+
+        }
+
+      }
+
+    );
+
+    console.log('WhatsApp Message Sent');
+
+  }
+
+  catch(error) {
+
+    console.log('WhatsApp Error');
+
+    console.log(error.response?.data || error.message);
+
+  }
+
+}
 
 
 // =====================================
@@ -72,8 +109,6 @@ app.get('/', (req, res) => {
   res.send('API Running');
 
 });
-
-
 
 
 // =====================================
@@ -107,27 +142,16 @@ app.post('/add-receipt', async (req, res) => {
     });
 
 
-
     // SAVE RECEIPT
 
     await receipt.save();
-
-
 
 
     // =====================================
     // SEND WHATSAPP MESSAGE
     // =====================================
 
-    try {
-
-      await client.messages.create({
-
-        from: process.env.TWILIO_WHATSAPP_NUMBER,
-
-        to: `whatsapp:+91${req.body.mobileNo}`,
-
-        body: `📄 SONAM ELECTRONICS
+    const message = `📄 SONAM ELECTRONICS
 
 Hello ${req.body.customerName},
 
@@ -147,23 +171,20 @@ Your repair receipt has been created successfully.
 
 ━━━━━━━━━━━━━━━
 
-Thank you for visiting Sonam Electronics 🙏`
+🔗 Check Repair Status:
+https://sonamagency.netlify.app/
 
-      });
-
-      console.log('WhatsApp Message Sent');
-
-    }
-
-    catch(error) {
-
-      console.log('WhatsApp Error');
-
-      console.log(error);
-
-    }
+Thank you for visiting Sonam Electronics 🙏`;
 
 
+
+    await sendWhatsAppMessage(
+
+      req.body.mobileNo,
+
+      message
+
+    );
 
 
     // SUCCESS RESPONSE
@@ -195,8 +216,6 @@ Thank you for visiting Sonam Electronics 🙏`
   }
 
 });
-
-
 
 
 // =====================================
@@ -252,8 +271,6 @@ app.get('/get-receipt/:serialNo', async (req, res) => {
 });
 
 
-
-
 // =====================================
 // GET RECEIPTS BY MOBILE NUMBER
 // =====================================
@@ -283,9 +300,6 @@ app.get('/get-receipt-mobile/:mobileNo', async (req, res) => {
     }
 
 
-
-    // TOTAL COST
-
     let totalCost = 0;
 
     receipts.forEach((item) => {
@@ -293,7 +307,6 @@ app.get('/get-receipt-mobile/:mobileNo', async (req, res) => {
       totalCost += Number(item.cost || 0);
 
     });
-
 
 
     res.status(200).json({
@@ -323,8 +336,6 @@ app.get('/get-receipt-mobile/:mobileNo', async (req, res) => {
   }
 
 });
-
-
 
 
 // =====================================
@@ -364,8 +375,6 @@ app.get('/all-receipts', async (req, res) => {
   }
 
 });
-
-
 
 
 // =====================================
@@ -411,20 +420,9 @@ app.put('/update-receipt/:serialNo', async (req, res) => {
     }
 
 
-
-    // =====================================
     // SEND STATUS UPDATE MESSAGE
-    // =====================================
 
-    try {
-
-      await client.messages.create({
-
-        from: process.env.TWILIO_WHATSAPP_NUMBER,
-
-        to: `whatsapp:+91${updatedReceipt.mobileNo}`,
-
-        body: `📢 SONAM ELECTRONICS
+    const statusMessage = `📢 SONAM ELECTRONICS
 
 Hello ${updatedReceipt.customerName},
 
@@ -438,20 +436,20 @@ Your repair status has been updated.
 
 ━━━━━━━━━━━━━━━
 
-Thank you 🙏`
+🔗 Check Repair Status:
+https://sonamagency.netlify.app/
 
-      });
+Thank you 🙏`;
 
-      console.log('Status WhatsApp Sent');
 
-    }
 
-    catch(error) {
+    await sendWhatsAppMessage(
 
-      console.log(error);
+      updatedReceipt.mobileNo,
 
-    }
+      statusMessage
 
+    );
 
 
     res.status(200).json({
@@ -481,8 +479,6 @@ Thank you 🙏`
   }
 
 });
-
-
 
 
 // =====================================
@@ -566,8 +562,6 @@ app.put('/edit-receipt/:serialNo', async (req, res) => {
 });
 
 
-
-
 // =====================================
 // DELETE RECEIPT
 // =====================================
@@ -619,8 +613,6 @@ app.delete('/delete-receipt/:id', async (req, res) => {
   }
 
 });
-
-
 
 
 // =====================================
