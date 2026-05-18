@@ -1,9 +1,6 @@
 const axios = require('axios');
-
 const express = require('express');
-
 const mongoose = require('mongoose');
-
 const cors = require('cors');
 
 require('dotenv').config();
@@ -18,7 +15,6 @@ const app = express();
 // =====================================
 
 app.use(cors());
-
 app.use(express.json());
 
 
@@ -37,7 +33,6 @@ mongoose.connect(process.env.MONGO_URL)
 .catch((err) => {
 
   console.log('MongoDB Error');
-
   console.log(err);
 
 });
@@ -47,9 +42,11 @@ mongoose.connect(process.env.MONGO_URL)
 // META WHATSAPP FUNCTION
 // =====================================
 
-async function sendWhatsAppMessage(to, message) {
+async function sendWhatsAppMessage(to) {
 
   try {
+
+    const cleanNumber = to.toString().replace(/\D/g, '');
 
     await axios.post(
 
@@ -59,13 +56,19 @@ async function sendWhatsAppMessage(to, message) {
 
         messaging_product: "whatsapp",
 
-        to: `91${to}`,
+        to: `91${cleanNumber}`,
 
-        type: "text",
+        type: "template",
 
-        text: {
+        template: {
 
-          body: message
+          name: "hello_world",
+
+          language: {
+
+            code: "en_US"
+
+          }
 
         }
 
@@ -147,42 +150,11 @@ app.post('/add-receipt', async (req, res) => {
     await receipt.save();
 
 
-    // =====================================
     // SEND WHATSAPP MESSAGE
-    // =====================================
-
-    const message = `📄 SONAM ELECTRONICS
-
-Hello ${req.body.customerName},
-
-Your repair receipt has been created successfully.
-
-━━━━━━━━━━━━━━━
-
-🔹 Serial No : ${req.body.serialNo}
-
-🔹 Material : ${req.body.repairMaterial}
-
-🔹 Status : ${req.body.repairStatus}
-
-🔹 Cost : ₹${req.body.cost || 0}
-
-🔹 Date : ${req.body.receiptDate}
-
-━━━━━━━━━━━━━━━
-
-🔗 Check Repair Status:
-https://sonamagency.netlify.app/
-
-Thank you for visiting Sonam Electronics 🙏`;
-
-
 
     await sendWhatsAppMessage(
 
-      req.body.mobileNo,
-
-      message
+      req.body.mobileNo
 
     );
 
@@ -420,34 +392,11 @@ app.put('/update-receipt/:serialNo', async (req, res) => {
     }
 
 
-    // SEND STATUS UPDATE MESSAGE
-
-    const statusMessage = `📢 SONAM ELECTRONICS
-
-Hello ${updatedReceipt.customerName},
-
-Your repair status has been updated.
-
-━━━━━━━━━━━━━━━
-
-🔹 Serial No : ${updatedReceipt.serialNo}
-
-🔹 Status : ${updatedReceipt.repairStatus}
-
-━━━━━━━━━━━━━━━
-
-🔗 Check Repair Status:
-https://sonamagency.netlify.app/
-
-Thank you 🙏`;
-
-
+    // SEND WHATSAPP MESSAGE
 
     await sendWhatsAppMessage(
 
-      updatedReceipt.mobileNo,
-
-      statusMessage
+      updatedReceipt.mobileNo
 
     );
 
@@ -619,8 +568,10 @@ app.delete('/delete-receipt/:id', async (req, res) => {
 // SERVER
 // =====================================
 
-app.listen(3000, () => {
+const PORT = process.env.PORT || 3000;
 
-  console.log('Server Running On Port 3000');
+app.listen(PORT, () => {
+
+  console.log(`Server Running On Port ${PORT}`);
 
 });
