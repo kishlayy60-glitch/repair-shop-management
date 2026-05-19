@@ -42,11 +42,11 @@ mongoose.connect(process.env.MONGO_URL)
 // META WHATSAPP FUNCTION
 // =====================================
 
-async function sendWhatsAppMessage(to) {
+async function sendWhatsAppMessage(data) {
 
   try {
 
-    const cleanNumber = to.toString().replace(/\D/g, '');
+    const cleanNumber = data.mobileNo.toString().replace(/\D/g, '');
 
     await axios.post(
 
@@ -62,13 +62,75 @@ async function sendWhatsAppMessage(to) {
 
         template: {
 
-          name: "hello_world",
+          name: "repair_receipt",
 
           language: {
 
-            code: "en_US"
+            code: "en"
 
-          }
+          },
+
+          components: [
+
+            {
+
+              type: "body",
+
+              parameters: [
+
+                {
+
+                  type: "text",
+
+                  text: data.customerName
+
+                },
+
+                {
+
+                  type: "text",
+
+                  text: data.serialNo
+
+                },
+
+                {
+
+                  type: "text",
+
+                  text: data.repairMaterial
+
+                },
+
+                {
+
+                  type: "text",
+
+                  text: data.repairStatus
+
+                },
+
+                {
+
+                  type: "text",
+
+                  text: String(data.cost || 0)
+
+                },
+
+                {
+
+                  type: "text",
+
+                  text: data.receiptDate
+
+                }
+
+              ]
+
+            }
+
+          ]
 
         }
 
@@ -88,7 +150,7 @@ async function sendWhatsAppMessage(to) {
 
     );
 
-    console.log('WhatsApp Message Sent');
+    console.log('WhatsApp Template Message Sent');
 
   }
 
@@ -152,11 +214,23 @@ app.post('/add-receipt', async (req, res) => {
 
     // SEND WHATSAPP MESSAGE
 
-    await sendWhatsAppMessage(
+    await sendWhatsAppMessage({
 
-      req.body.mobileNo
+      mobileNo: req.body.mobileNo,
 
-    );
+      customerName: req.body.customerName,
+
+      serialNo: req.body.serialNo,
+
+      repairMaterial: req.body.repairMaterial,
+
+      repairStatus: req.body.repairStatus,
+
+      cost: req.body.cost,
+
+      receiptDate: req.body.receiptDate
+
+    });
 
 
     // SUCCESS RESPONSE
@@ -394,11 +468,23 @@ app.put('/update-receipt/:serialNo', async (req, res) => {
 
     // SEND WHATSAPP MESSAGE
 
-    await sendWhatsAppMessage(
+    await sendWhatsAppMessage({
 
-      updatedReceipt.mobileNo
+      mobileNo: updatedReceipt.mobileNo,
 
-    );
+      customerName: updatedReceipt.customerName,
+
+      serialNo: updatedReceipt.serialNo,
+
+      repairMaterial: updatedReceipt.repairMaterial,
+
+      repairStatus: updatedReceipt.repairStatus,
+
+      cost: updatedReceipt.cost,
+
+      receiptDate: updatedReceipt.receiptDate
+
+    });
 
 
     res.status(200).json({
