@@ -14,7 +14,7 @@ import { Receipt } from '../../services/receipt';
     FormsModule
   ],
   templateUrl: './update-status.html',
-  styleUrl: './update-status.css',
+  styleUrls: ['./update-status.css'],
 })
 
 export class UpdateStatus implements OnInit {
@@ -25,9 +25,7 @@ export class UpdateStatus implements OnInit {
 
   searchText = '';
 
-  // =========================
   // EDIT MODE
-  // =========================
 
   editMode = false;
 
@@ -47,7 +45,7 @@ export class UpdateStatus implements OnInit {
 
     repairStatus: 'Pending',
 
-    receivedDate: ''
+    itemReceivedDate: ''
 
   };
 
@@ -61,9 +59,7 @@ export class UpdateStatus implements OnInit {
 
   }
 
-  // =========================
   // LOAD ALL RECEIPTS
-  // =========================
 
   loadReceipts() {
 
@@ -74,8 +70,6 @@ export class UpdateStatus implements OnInit {
       next: (res: any) => {
 
         console.log(res);
-
-        // BACKEND ARRAY HANDLE
 
         if(Array.isArray(res)) {
 
@@ -105,9 +99,7 @@ export class UpdateStatus implements OnInit {
 
   }
 
-  // =========================
   // SEARCH RECEIPT
-  // =========================
 
   searchReceipt() {
 
@@ -132,9 +124,7 @@ export class UpdateStatus implements OnInit {
 
   }
 
-  // =========================
-  // OPEN EDIT FORM
-  // =========================
+  // EDIT RECEIPT
 
   editReceipt(receipt: any) {
 
@@ -146,8 +136,6 @@ export class UpdateStatus implements OnInit {
 
     };
 
-    // SCROLL TOP
-
     window.scrollTo({
 
       top: 0,
@@ -158,13 +146,9 @@ export class UpdateStatus implements OnInit {
 
   }
 
-  // =========================
   // UPDATE FULL RECEIPT
-  // =========================
 
   updateReceipt() {
-
-    // MOBILE VALIDATION
 
     if(
 
@@ -212,9 +196,7 @@ export class UpdateStatus implements OnInit {
 
   }
 
-  // =========================
   // CANCEL EDIT
-  // =========================
 
   cancelEdit() {
 
@@ -222,9 +204,7 @@ export class UpdateStatus implements OnInit {
 
   }
 
-  // =========================
-  // UPDATE STATUS + DATE
-  // =========================
+  // UPDATE STATUS
 
   updateStatus(receipt: any) {
 
@@ -237,7 +217,7 @@ export class UpdateStatus implements OnInit {
 
         repairStatus: receipt.repairStatus,
 
-        receivedDate: receipt.receivedDate
+        itemReceivedDate: receipt.itemReceivedDate
 
       }
 
@@ -249,7 +229,9 @@ export class UpdateStatus implements OnInit {
 
         console.log(res);
 
-        alert('Status & Date Updated Successfully');
+        alert('Status Updated Successfully');
+
+        this.loadReceipts();
 
       },
 
@@ -265,9 +247,7 @@ export class UpdateStatus implements OnInit {
 
   }
 
-  // =========================
   // DELETE RECEIPT
-  // =========================
 
   deleteReceipt(id: string) {
 

@@ -10,19 +10,13 @@ import { Observable } from 'rxjs';
 
 export class Receipt {
 
-  // =========================
-  // LIVE BACKEND API URL
-  // =========================
-
   apiUrl = 'https://repair-shop-management.onrender.com';
 
   constructor(
     private http: HttpClient
   ) {}
 
-  // =========================
   // ADD RECEIPT
-  // =========================
 
   addReceipt(data: any): Observable<any> {
 
@@ -36,9 +30,7 @@ export class Receipt {
 
   }
 
-  // =========================
-  // GET SINGLE RECEIPT BY SERIAL
-  // =========================
+  // GET SINGLE RECEIPT
 
   getReceipt(serialNo: string): Observable<any> {
 
@@ -50,9 +42,7 @@ export class Receipt {
 
   }
 
-  // =========================
   // GET RECEIPTS BY MOBILE
-  // =========================
 
   getReceiptByMobile(mobileNo: string): Observable<any> {
 
@@ -64,9 +54,7 @@ export class Receipt {
 
   }
 
-  // =========================
   // GET ALL RECEIPTS
-  // =========================
 
   getAllReceipts(): Observable<any> {
 
@@ -78,9 +66,7 @@ export class Receipt {
 
   }
 
-  // =========================
-  // UPDATE RECEIPT STATUS + DATE
-  // =========================
+  // UPDATE RECEIPT STATUS
 
   updateReceiptStatus(
 
@@ -90,7 +76,7 @@ export class Receipt {
 
       repairStatus: string,
 
-      receivedDate: string
+      itemReceivedDate: string
 
     }
 
@@ -106,9 +92,7 @@ export class Receipt {
 
   }
 
-  // =========================
   // EDIT RECEIPT
-  // =========================
 
   editReceipt(
 
@@ -128,9 +112,7 @@ export class Receipt {
 
   }
 
-  // =========================
   // DELETE RECEIPT
-  // =========================
 
   deleteReceipt(id: string): Observable<any> {
 
