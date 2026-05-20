@@ -25,15 +25,11 @@ export class UpdateStatus implements OnInit {
 
   searchText = '';
 
-
-
   // =========================
   // EDIT MODE
   // =========================
 
   editMode = false;
-
-
 
   selectedReceipt: any = {
 
@@ -49,25 +45,21 @@ export class UpdateStatus implements OnInit {
 
     repairBy: '',
 
-    repairStatus: 'Pending'
+    repairStatus: 'Pending',
+
+    receivedDate: ''
 
   };
-
-
 
   constructor(
     private receiptService: Receipt
   ) {}
-
-
 
   ngOnInit(): void {
 
     this.loadReceipts();
 
   }
-
-
 
   // =========================
   // LOAD ALL RECEIPTS
@@ -113,8 +105,6 @@ export class UpdateStatus implements OnInit {
 
   }
 
-
-
   // =========================
   // SEARCH RECEIPT
   // =========================
@@ -142,8 +132,6 @@ export class UpdateStatus implements OnInit {
 
   }
 
-
-
   // =========================
   // OPEN EDIT FORM
   // =========================
@@ -158,8 +146,6 @@ export class UpdateStatus implements OnInit {
 
     };
 
-
-
     // SCROLL TOP
 
     window.scrollTo({
@@ -171,8 +157,6 @@ export class UpdateStatus implements OnInit {
     });
 
   }
-
-
 
   // =========================
   // UPDATE FULL RECEIPT
@@ -194,8 +178,6 @@ export class UpdateStatus implements OnInit {
 
     }
 
-
-
     this.receiptService
     .editReceipt(
 
@@ -204,7 +186,6 @@ export class UpdateStatus implements OnInit {
       this.selectedReceipt
 
     )
-
     .subscribe({
 
       next: (res: any) => {
@@ -213,11 +194,7 @@ export class UpdateStatus implements OnInit {
 
         alert('Receipt Updated Successfully');
 
-
-
         this.editMode = false;
-
-
 
         this.loadReceipts();
 
@@ -235,8 +212,6 @@ export class UpdateStatus implements OnInit {
 
   }
 
-
-
   // =========================
   // CANCEL EDIT
   // =========================
@@ -247,10 +222,8 @@ export class UpdateStatus implements OnInit {
 
   }
 
-
-
   // =========================
-  // UPDATE STATUS
+  // UPDATE STATUS + DATE
   // =========================
 
   updateStatus(receipt: any) {
@@ -261,7 +234,11 @@ export class UpdateStatus implements OnInit {
       receipt.serialNo,
 
       {
-        repairStatus: receipt.repairStatus
+
+        repairStatus: receipt.repairStatus,
+
+        receivedDate: receipt.receivedDate
+
       }
 
     )
@@ -272,7 +249,7 @@ export class UpdateStatus implements OnInit {
 
         console.log(res);
 
-        alert('Status Updated Successfully');
+        alert('Status & Date Updated Successfully');
 
       },
 
@@ -287,8 +264,6 @@ export class UpdateStatus implements OnInit {
     });
 
   }
-
-
 
   // =========================
   // DELETE RECEIPT

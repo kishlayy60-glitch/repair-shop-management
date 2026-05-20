@@ -2,8 +2,6 @@
 
   <h1>Update Receipt Status</h1>
 
-
-
   <!-- =========================
        EDIT FORM
   ========================== -->
@@ -15,23 +13,17 @@
 
     <h2>Edit Receipt</h2>
 
-
-
     <input
       type="text"
       placeholder="Serial No"
       [(ngModel)]="selectedReceipt.serialNo"
     >
 
-
-
     <input
       type="text"
       placeholder="Customer Name"
       [(ngModel)]="selectedReceipt.customerName"
     >
-
-
 
     <input
       type="text"
@@ -40,15 +32,11 @@
       [(ngModel)]="selectedReceipt.mobileNo"
     >
 
-
-
     <input
       type="text"
       placeholder="Repair Material"
       [(ngModel)]="selectedReceipt.repairMaterial"
     >
-
-
 
     <input
       type="number"
@@ -56,15 +44,11 @@
       [(ngModel)]="selectedReceipt.cost"
     >
 
-
-
     <input
       type="text"
       placeholder="Repair By"
       [(ngModel)]="selectedReceipt.repairBy"
     >
-
-
 
     <select
       [(ngModel)]="selectedReceipt.repairStatus"
@@ -80,7 +64,12 @@
 
     </select>
 
+    <!-- ITEM RECEIVED DATE -->
 
+    <input
+      type="date"
+      [(ngModel)]="selectedReceipt.itemReceivedDate"
+    >
 
     <!-- EDIT ACTION -->
 
@@ -93,8 +82,6 @@
         Update Receipt
       </button>
 
-
-
       <button
         class="cancel-btn"
         (click)="cancelEdit()"
@@ -105,10 +92,6 @@
     </div>
 
   </div>
-
-
-
-
 
   <!-- =========================
        SEARCH
@@ -121,10 +104,6 @@
     (input)="searchReceipt()"
     class="search-box"
   >
-
-
-
-
 
   <!-- =========================
        TABLE
@@ -148,13 +127,13 @@
 
         <th>Status</th>
 
+        <th>Item Received Date</th>
+
         <th>Action</th>
 
       </tr>
 
     </thead>
-
-
 
     <tbody>
 
@@ -169,8 +148,6 @@
         <td>{{ item.repairMaterial }}</td>
 
         <td>₹{{ item.cost }}</td>
-
-
 
         <!-- STATUS -->
 
@@ -190,7 +167,16 @@
 
         </td>
 
+        <!-- ITEM RECEIVED DATE -->
 
+        <td>
+
+          <input
+            type="date"
+            [(ngModel)]="item.itemReceivedDate"
+          >
+
+        </td>
 
         <!-- ACTION -->
 
@@ -205,8 +191,6 @@
             Edit
           </button>
 
-
-
           <!-- UPDATE -->
 
           <button
@@ -215,8 +199,6 @@
           >
             Update
           </button>
-
-
 
           <!-- DELETE -->
 
@@ -234,10 +216,6 @@
     </tbody>
 
   </table>
-
-
-
-
 
   <!-- =========================
        NO DATA

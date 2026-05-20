@@ -102,7 +102,21 @@ const receiptSchema = new mongoose.Schema(
 
     receiptDate: {
 
-      type: String
+      type: String,
+
+      default: ''
+
+    },
+
+
+
+    // ITEM RECEIVED DATE
+
+    itemReceivedDate: {
+
+      type: String,
+
+      default: ''
 
     }
 

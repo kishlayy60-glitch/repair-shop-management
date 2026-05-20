@@ -122,7 +122,7 @@ async function sendWhatsAppMessage(data) {
 
                   type: "text",
 
-                  text: data.receiptDate
+                  text: data.receiptDate || ''
 
                 }
 
@@ -202,17 +202,15 @@ app.post('/add-receipt', async (req, res) => {
 
       repairStatus: req.body.repairStatus,
 
-      receiptDate: req.body.receiptDate
+      receiptDate: req.body.receiptDate,
+
+      itemReceivedDate: req.body.itemReceivedDate || ''
 
     });
 
 
-    // SAVE RECEIPT
-
     await receipt.save();
 
-
-    // SEND WHATSAPP MESSAGE
 
     await sendWhatsAppMessage({
 
@@ -232,8 +230,6 @@ app.post('/add-receipt', async (req, res) => {
 
     });
 
-
-    // SUCCESS RESPONSE
 
     res.status(201).json({
 
@@ -441,7 +437,9 @@ app.put('/update-receipt/:serialNo', async (req, res) => {
 
       {
 
-        repairStatus: req.body.repairStatus
+        repairStatus: req.body.repairStatus,
+
+        itemReceivedDate: req.body.itemReceivedDate
 
       },
 
@@ -465,8 +463,6 @@ app.put('/update-receipt/:serialNo', async (req, res) => {
 
     }
 
-
-    // SEND WHATSAPP MESSAGE
 
     await sendWhatsAppMessage({
 
@@ -544,7 +540,9 @@ app.put('/edit-receipt/:serialNo', async (req, res) => {
 
         repairBy: req.body.repairBy,
 
-        repairStatus: req.body.repairStatus
+        repairStatus: req.body.repairStatus,
+
+        itemReceivedDate: req.body.itemReceivedDate
 
       },
 

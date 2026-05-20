@@ -20,8 +20,6 @@ export class Receipt {
     private http: HttpClient
   ) {}
 
-
-
   // =========================
   // ADD RECEIPT
   // =========================
@@ -38,8 +36,6 @@ export class Receipt {
 
   }
 
-
-
   // =========================
   // GET SINGLE RECEIPT BY SERIAL
   // =========================
@@ -53,8 +49,6 @@ export class Receipt {
     );
 
   }
-
-
 
   // =========================
   // GET RECEIPTS BY MOBILE
@@ -70,8 +64,6 @@ export class Receipt {
 
   }
 
-
-
   // =========================
   // GET ALL RECEIPTS
   // =========================
@@ -86,17 +78,21 @@ export class Receipt {
 
   }
 
-
-
   // =========================
-  // UPDATE RECEIPT STATUS
+  // UPDATE RECEIPT STATUS + DATE
   // =========================
 
   updateReceiptStatus(
 
     serialNo: string,
 
-    data: any
+    data: {
+
+      repairStatus: string,
+
+      receivedDate: string
+
+    }
 
   ): Observable<any> {
 
@@ -109,8 +105,6 @@ export class Receipt {
     );
 
   }
-
-
 
   // =========================
   // EDIT RECEIPT
@@ -133,8 +127,6 @@ export class Receipt {
     );
 
   }
-
-
 
   // =========================
   // DELETE RECEIPT
