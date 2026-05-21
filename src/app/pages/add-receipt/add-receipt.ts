@@ -75,6 +75,14 @@ export class AddReceiptComponent {
 
 
       // =========================
+      // DESCRIPTION OPTIONAL
+      // =========================
+
+      description: [''],
+
+
+
+      // =========================
       // MOBILE VALIDATION
       // ONLY 10 DIGITS
       // =========================
@@ -176,7 +184,9 @@ export class AddReceiptComponent {
           repairStatus: 'Pending',
 
           receiptDate:
-            new Date().toLocaleDateString()
+            new Date().toLocaleDateString(),
+
+          description: ''
 
         });
 

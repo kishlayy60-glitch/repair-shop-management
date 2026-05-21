@@ -196,6 +196,8 @@ app.post('/add-receipt', async (req, res) => {
 
       repairMaterial: req.body.repairMaterial,
 
+      description: req.body.description || '',
+
       cost: req.body.cost || 0,
 
       repairBy: req.body.repairBy || '',
@@ -535,6 +537,8 @@ app.put('/edit-receipt/:serialNo', async (req, res) => {
         mobileNo: req.body.mobileNo,
 
         repairMaterial: req.body.repairMaterial,
+
+        description: req.body.description,
 
         cost: req.body.cost,
 

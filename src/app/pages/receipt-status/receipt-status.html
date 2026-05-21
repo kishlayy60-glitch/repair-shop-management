@@ -83,6 +83,22 @@
 
 
 
+    <!-- DESCRIPTION -->
+
+    <div
+      class="receipt-row"
+      *ngIf="receipt.description"
+    >
+
+      <p>
+        <b>Problem:</b>
+        {{ receipt.description }}
+      </p>
+
+    </div>
+
+
+
     <div class="receipt-row">
 
       <p>
@@ -141,7 +157,7 @@
 
           <th>Serial No</th>
 
-          <th>Material</th>
+          <th>Material / Problem</th>
 
           <th>Repair By</th>
 
@@ -161,7 +177,19 @@
 
           <td>{{ item.serialNo }}</td>
 
-          <td>{{ item.repairMaterial }}</td>
+          <td>
+
+            <b>{{ item.repairMaterial }}</b>
+
+            <br>
+
+            <small *ngIf="item.description">
+
+              {{ item.description }}
+
+            </small>
+
+          </td>
 
           <td>{{ item.repairBy }}</td>
 

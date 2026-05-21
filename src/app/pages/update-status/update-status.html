@@ -38,6 +38,14 @@
       [(ngModel)]="selectedReceipt.repairMaterial"
     >
 
+    <!-- DESCRIPTION -->
+
+    <textarea
+      placeholder="Problem Description"
+      [(ngModel)]="selectedReceipt.description"
+      rows="4"
+    ></textarea>
+
     <input
       type="number"
       placeholder="Cost"
@@ -123,7 +131,7 @@
 
         <th>Mobile</th>
 
-        <th>Material</th>
+        <th>Material / Problem</th>
 
         <th>Cost</th>
 
@@ -147,7 +155,19 @@
 
         <td>{{ item.mobileNo }}</td>
 
-        <td>{{ item.repairMaterial }}</td>
+        <td>
+
+          <b>{{ item.repairMaterial }}</b>
+
+          <br>
+
+          <small *ngIf="item.description">
+
+            {{ item.description }}
+
+          </small>
+
+        </td>
 
         <td>₹{{ item.cost }}</td>
 

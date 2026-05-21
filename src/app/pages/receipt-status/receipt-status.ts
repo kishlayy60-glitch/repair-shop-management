@@ -14,7 +14,7 @@ import { Receipt } from '../../services/receipt';
     FormsModule
   ],
   templateUrl: './receipt-status.html',
-  styleUrl: './receipt-status.css',
+  styleUrls: ['./receipt-status.css'],
 })
 
 export class ReceiptStatus {

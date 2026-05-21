@@ -39,6 +39,8 @@ export class UpdateStatus implements OnInit {
 
     repairMaterial: '',
 
+    description: '',
+
     cost: '',
 
     repairBy: '',

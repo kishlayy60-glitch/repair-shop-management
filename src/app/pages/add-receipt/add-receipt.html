@@ -77,6 +77,16 @@
 
 
 
+    <!-- DESCRIPTION OPTIONAL -->
+
+    <textarea
+      placeholder="Problem Description (Optional)"
+      formControlName="description"
+      rows="4"
+    ></textarea>
+
+
+
     <!-- COST OPTIONAL -->
 
     <input
@@ -203,6 +213,18 @@
 
 
 
+    <!-- DESCRIPTION -->
+
+    <p *ngIf="receiptForm.value.description">
+
+      <b>Problem :</b>
+
+      {{ receiptForm.value.description }}
+
+    </p>
+
+
+
     <p>
 
       <b>Cost :</b>
@@ -265,8 +287,8 @@
 
     </button>
 
-<br>
-<br>
+    <br>
+    <br>
 
     <!-- PDF -->
 

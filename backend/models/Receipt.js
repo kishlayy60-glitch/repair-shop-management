@@ -54,6 +54,20 @@ const receiptSchema = new mongoose.Schema(
 
 
 
+    // DESCRIPTION OPTIONAL
+
+    description: {
+
+      type: String,
+
+      default: '',
+
+      trim: true
+
+    },
+
+
+
     // OPTIONAL
 
     cost: {
