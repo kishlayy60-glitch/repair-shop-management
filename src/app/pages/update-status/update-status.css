@@ -10,11 +10,15 @@
 
 
 
+/* =========================
+   TITLE
+========================= */
+
 h1{
 
   text-align: center;
 
-  margin-bottom: 25px;
+  margin-bottom: 20px;
 
   font-size: 45px;
 
@@ -24,7 +28,53 @@ h1{
 
 
 
-/* SEARCH BOX */
+/* =========================
+   EXPORT BUTTON
+========================= */
+
+.excel-btn-box{
+
+  display: flex;
+
+  justify-content: flex-end;
+
+  margin-bottom: 20px;
+
+}
+
+.excel-btn{
+
+  background: #0f9d58;
+
+  color: white;
+
+  border: none;
+
+  padding: 12px 20px;
+
+  border-radius: 6px;
+
+  cursor: pointer;
+
+  font-size: 16px;
+
+  font-weight: bold;
+
+  transition: 0.3s;
+
+}
+
+.excel-btn:hover{
+
+  background: #0b7d45;
+
+}
+
+
+
+/* =========================
+   SEARCH BOX
+========================= */
 
 .search-box{
 
@@ -46,7 +96,77 @@ h1{
 
 
 
-/* TABLE */
+/* =========================
+   EDIT FORM
+========================= */
+
+.edit-form{
+
+  background: white;
+
+  padding: 25px;
+
+  margin-bottom: 30px;
+
+  border-radius: 10px;
+
+  box-shadow: 0px 2px 10px rgba(0,0,0,0.1);
+
+}
+
+.edit-form h2{
+
+  margin-bottom: 20px;
+
+  text-align: center;
+
+}
+
+.edit-form input,
+
+.edit-form textarea,
+
+.edit-form select{
+
+  width: 100%;
+
+  padding: 12px;
+
+  margin-bottom: 15px;
+
+  border: 1px solid #ccc;
+
+  border-radius: 5px;
+
+  font-size: 16px;
+
+  box-sizing: border-box;
+
+}
+
+.description-box{
+
+  resize: vertical;
+
+  min-height: 100px;
+
+}
+
+.edit-actions{
+
+  display: flex;
+
+  gap: 10px;
+
+  justify-content: center;
+
+}
+
+
+
+/* =========================
+   TABLE
+========================= */
 
 table{
 
@@ -60,8 +180,6 @@ table{
 
 }
 
-
-
 th, td{
 
   border: 1px solid #ddd;
@@ -70,9 +188,9 @@ th, td{
 
   text-align: center;
 
+  vertical-align: middle;
+
 }
-
-
 
 th{
 
@@ -84,8 +202,6 @@ th{
 
 }
 
-
-
 td{
 
   font-size: 18px;
@@ -94,7 +210,35 @@ td{
 
 
 
-/* STATUS DROPDOWN */
+/* =========================
+   MATERIAL BOX
+========================= */
+
+.material-box{
+
+  text-align: left;
+
+  line-height: 1.5;
+
+}
+
+.problem-text{
+
+  color: #666;
+
+  font-size: 14px;
+
+  display: block;
+
+  margin-top: 5px;
+
+}
+
+
+
+/* =========================
+   STATUS DROPDOWN
+========================= */
 
 select{
 
@@ -110,7 +254,9 @@ select{
 
 
 
-/* BUTTONS */
+/* =========================
+   BUTTONS
+========================= */
 
 button{
 
@@ -142,7 +288,6 @@ button{
 
 }
 
-
 .edit-btn:hover{
 
   background: darkorange;
@@ -158,7 +303,6 @@ button{
   background: green;
 
 }
-
 
 .update-btn:hover{
 
@@ -176,7 +320,6 @@ button{
 
 }
 
-
 .delete-btn:hover{
 
   background: darkred;
@@ -185,7 +328,25 @@ button{
 
 
 
-/* NO DATA */
+/* CANCEL BUTTON */
+
+.cancel-btn{
+
+  background: gray;
+
+}
+
+.cancel-btn:hover{
+
+  background: #444;
+
+}
+
+
+
+/* =========================
+   NO DATA
+========================= */
 
 .no-data{
 
@@ -201,7 +362,9 @@ button{
 
 
 
-/* MOBILE RESPONSIVE */
+/* =========================
+   MOBILE RESPONSIVE
+========================= */
 
 @media(max-width: 768px){
 
@@ -211,15 +374,27 @@ button{
 
   }
 
+  h1{
+
+    font-size: 30px;
+
+  }
+
   table{
 
-    font-size: 12px;
+    display: block;
+
+    overflow-x: auto;
+
+    white-space: nowrap;
 
   }
 
   th, td{
 
     padding: 8px;
+
+    font-size: 13px;
 
   }
 
@@ -231,9 +406,15 @@ button{
 
   }
 
-  h1{
+  .excel-btn{
 
-    font-size: 30px;
+    width: 100%;
+
+  }
+
+  .edit-actions{
+
+    flex-direction: column;
 
   }
 

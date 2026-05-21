@@ -6,6 +6,14 @@ import { FormsModule } from '@angular/forms';
 
 import { Receipt } from '../../services/receipt';
 
+
+// EXCEL EXPORT
+
+import * as XLSX from 'xlsx';
+
+import { saveAs } from 'file-saver';
+
+
 @Component({
   selector: 'app-update-status',
   standalone: true,
@@ -286,6 +294,95 @@ export class UpdateStatus implements OnInit {
       });
 
     }
+
+  }
+
+
+  // =====================================
+  // EXPORT TO EXCEL
+  // =====================================
+
+  exportToExcel() {
+
+    const exportData = this.filteredReceipts.map((item) => ({
+
+      Serial: item.serialNo,
+
+      Name: item.customerName,
+
+      Mobile: item.mobileNo,
+
+      "Material / Problem":
+        item.repairMaterial +
+
+        ' - ' +
+
+        (item.description || ''),
+
+      Cost: item.cost,
+
+      Status: item.repairStatus,
+
+      "Item Received Date":
+        item.itemReceivedDate || ''
+
+    }));
+
+
+    const worksheet: XLSX.WorkSheet =
+
+      XLSX.utils.json_to_sheet(exportData);
+
+
+    const workbook: XLSX.WorkBook = {
+
+      Sheets: {
+
+        data: worksheet
+
+      },
+
+      SheetNames: ['data']
+
+    };
+
+
+    const excelBuffer: any = XLSX.write(
+
+      workbook,
+
+      {
+
+        bookType: 'xlsx',
+
+        type: 'array'
+
+      }
+
+    );
+
+
+    const data: Blob = new Blob(
+
+      [excelBuffer],
+
+      {
+
+        type:
+        'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8'
+
+      }
+
+    );
+
+
+    saveAs(
+
+      data,
+
+      'repair-receipts.xlsx'
+
+    );
 
   }
 
