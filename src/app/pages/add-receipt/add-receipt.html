@@ -11,8 +11,6 @@
 
   </p>
 
-
-
   <!-- FORM -->
 
   <form
@@ -28,8 +26,6 @@
       formControlName="serialNo"
     >
 
-
-
     <!-- CUSTOMER NAME -->
 
     <input
@@ -37,8 +33,6 @@
       placeholder="Customer Name *"
       formControlName="customerName"
     >
-
-
 
     <!-- MOBILE -->
 
@@ -48,8 +42,6 @@
       maxlength="10"
       formControlName="mobileNo"
     >
-
-
 
     <!-- MOBILE VALIDATION -->
 
@@ -65,8 +57,6 @@
 
     </small>
 
-
-
     <!-- MATERIAL -->
 
     <input
@@ -74,8 +64,6 @@
       placeholder="Repair Material *"
       formControlName="repairMaterial"
     >
-
-
 
     <!-- DESCRIPTION OPTIONAL -->
 
@@ -85,8 +73,6 @@
       rows="4"
     ></textarea>
 
-
-
     <!-- COST OPTIONAL -->
 
     <input
@@ -95,8 +81,6 @@
       formControlName="cost"
     >
 
-
-
     <!-- REPAIR BY OPTIONAL -->
 
     <input
@@ -104,8 +88,6 @@
       placeholder="Repair By (Optional)"
       formControlName="repairBy"
     >
-
-
 
     <!-- STATUS -->
 
@@ -121,8 +103,6 @@
 
     </select>
 
-
-
     <!-- SAVE -->
 
     <button
@@ -135,10 +115,6 @@
     </button>
 
   </form>
-
-
-
-
 
   <!-- RECEIPT PREVIEW -->
 
@@ -155,8 +131,6 @@
 
     </p>
 
-
-
     <!-- DATE -->
 
     <p>
@@ -167,11 +141,7 @@
 
     </p>
 
-
-
     <hr>
-
-
 
     <p>
 
@@ -181,8 +151,6 @@
 
     </p>
 
-
-
     <p>
 
       <b>Customer Name :</b>
@@ -190,8 +158,6 @@
       {{ receiptForm.value.customerName }}
 
     </p>
-
-
 
     <p>
 
@@ -201,8 +167,6 @@
 
     </p>
 
-
-
     <p>
 
       <b>Repair Material :</b>
@@ -210,8 +174,6 @@
       {{ receiptForm.value.repairMaterial }}
 
     </p>
-
-
 
     <!-- DESCRIPTION -->
 
@@ -223,8 +185,6 @@
 
     </p>
 
-
-
     <p>
 
       <b>Cost :</b>
@@ -232,8 +192,6 @@
       ₹{{ receiptForm.value.cost || 0 }}
 
     </p>
-
-
 
     <p>
 
@@ -243,8 +201,6 @@
 
     </p>
 
-
-
     <p>
 
       <b>Status :</b>
@@ -253,23 +209,74 @@
 
     </p>
 
+    <hr>
 
+    <!-- QR SECTION -->
+
+    <div class="qr-section">
+
+      <h3>
+
+        Scan To Check Repair Status
+
+      </h3>
+
+      <!-- QR IMAGE -->
+
+      <img
+        src="https://api.qrserver.com/v1/create-qr-code/?size=120x120&data=https://sonamagency.netlify.app/"
+        alt="QR Code"
+        class="qr-code"
+      >
+
+      <p class="website-link">
+
+        https://sonamagency.netlify.app/
+
+      </p>
+
+    </div>
+
+    <!-- NOTICE -->
+
+    <div class="notice-box">
+
+      <h4>
+
+        Important Notice
+
+      </h4>
+
+      <p>
+
+        • Please collect your repaired product within
+        <b>20 days</b>.
+      </p>
+
+      <p>
+
+        • After 20 days, an additional storage charge
+        of <b>₹300 per day</b> may apply.
+      </p>
+
+      <p>
+
+        • If the product is not collected within
+        <b>30 days</b>, it may be treated as scrap
+        and the shop will not be responsible for it.
+      </p>
+
+    </div>
 
     <hr>
 
-
-
-    <h3>
+    <h3 class="thank-you">
 
       Thank You Visit Again
 
     </h3>
 
   </div>
-
-
-
-
 
   <!-- ACTION BUTTONS -->
 

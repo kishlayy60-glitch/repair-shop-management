@@ -1,26 +1,405 @@
 .container{
+
   width: 400px;
-  margin: 50px auto;
+
+  margin: 30px auto;
+
+  font-family: Arial, sans-serif;
+
 }
+
+
+
+/* =========================
+   TITLE
+========================= */
 
 h1{
+
   text-align: center;
+
+  margin-bottom: 20px;
+
+  font-size: 32px;
+
 }
+
+
+
+/* =========================
+   DATE
+========================= */
+
+.date{
+
+  text-align: center;
+
+  margin-bottom: 20px;
+
+  font-size: 16px;
+
+  color: #555;
+
+}
+
+
+
+/* =========================
+   FORM
+========================= */
 
 form{
+
   display: flex;
+
   flex-direction: column;
+
   gap: 15px;
+
 }
 
-input,select,button{
-  padding: 12px;
-  font-size: 16px;
-}
+
+
+/* =========================
+   INPUTS
+========================= */
+
+input,
+
+textarea,
+
+select,
 
 button{
+
+  padding: 12px;
+
+  font-size: 16px;
+
+  border-radius: 5px;
+
+  border: 1px solid #ccc;
+
+  box-sizing: border-box;
+
+}
+
+
+
+/* TEXTAREA */
+
+textarea{
+
+  resize: none;
+
+}
+
+
+
+/* =========================
+   BUTTON
+========================= */
+
+button{
+
   background: black;
+
   color: white;
+
   border: none;
+
   cursor: pointer;
+
+  transition: 0.3s;
+
+}
+
+button:hover{
+
+  background: #333;
+
+}
+
+
+
+/* =========================
+   ERROR
+========================= */
+
+.error{
+
+  color: red;
+
+  font-size: 13px;
+
+}
+
+
+
+/* =========================
+   RECEIPT PREVIEW
+========================= */
+
+.receipt-preview{
+
+  margin-top: 40px;
+
+  border: 1px dashed #000;
+
+  padding: 15px;
+
+  background: #fff;
+
+  font-size: 14px;
+
+  width: 100%;
+
+  box-sizing: border-box;
+
+}
+
+
+
+/* SHOP NAME */
+
+.receipt-preview h2{
+
+  text-align: center;
+
+  margin: 0;
+
+  font-size: 22px;
+
+}
+
+
+
+/* RECEIPT TITLE */
+
+.address{
+
+  text-align: center;
+
+  margin-top: 5px;
+
+  margin-bottom: 15px;
+
+  font-size: 15px;
+
+}
+
+
+
+/* PARAGRAPH */
+
+.receipt-preview p{
+
+  margin: 8px 0;
+
+  line-height: 1.5;
+
+  word-break: break-word;
+
+}
+
+
+
+/* HR */
+
+.receipt-preview hr{
+
+  border: none;
+
+  border-top: 1px dashed #000;
+
+  margin: 12px 0;
+
+}
+
+
+
+/* =========================
+   QR SECTION
+========================= */
+
+.qr-section{
+
+  text-align: center;
+
+  margin-top: 15px;
+
+}
+
+.qr-code{
+
+  width: 110px;
+
+  height: 110px;
+
+  margin-top: 8px;
+
+}
+
+.website-link{
+
+  font-size: 11px;
+
+  margin-top: 5px;
+
+  word-break: break-all;
+
+}
+
+
+
+/* =========================
+   NOTICE BOX
+========================= */
+
+.notice-box{
+
+  margin-top: 15px;
+
+  padding: 10px;
+
+  border: 1px solid #000;
+
+  font-size: 11px;
+
+  line-height: 1.5;
+
+  background: #f8f8f8;
+
+}
+
+.notice-box h4{
+
+  margin: 0 0 8px 0;
+
+  text-align: center;
+
+  font-size: 13px;
+
+}
+
+.notice-box p{
+
+  margin: 5px 0;
+
+}
+
+
+
+/* =========================
+   THANK YOU
+========================= */
+
+.thank-you{
+
+  text-align: center;
+
+  margin-top: 15px;
+
+  font-size: 16px;
+
+}
+
+
+
+/* =========================
+   ACTION BUTTONS
+========================= */
+
+.action-buttons{
+
+  margin-top: 20px;
+
+  text-align: center;
+
+}
+
+
+
+/* PRINT BUTTON */
+
+.print-btn{
+
+  background: #111;
+
+}
+
+
+
+/* PDF BUTTON */
+
+.pdf-btn{
+
+  background: darkred;
+
+}
+
+
+
+/* =========================
+   THERMAL PRINT
+========================= */
+
+@media print {
+
+  body{
+
+    margin: 0;
+
+    padding: 0;
+
+  }
+
+  .container{
+
+    width: 58mm;
+
+    margin: 0 auto;
+
+  }
+
+  form,
+
+  .action-buttons,
+
+  h1,
+
+  .date{
+
+    display: none;
+
+  }
+
+  .receipt-preview{
+
+    border: none;
+
+    padding: 0;
+
+    margin: 0;
+
+    font-size: 12px;
+
+  }
+
+}
+
+
+
+/* =========================
+   MOBILE
+========================= */
+
+@media(max-width: 480px){
+
+  .container{
+
+    width: 95%;
+
+  }
+
 }
