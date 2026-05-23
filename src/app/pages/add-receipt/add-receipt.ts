@@ -314,72 +314,89 @@ export class AddReceiptComponent {
   // DOWNLOAD PDF
   // =========================
 
-  downloadPDF() {
+  // =========================
+// DOWNLOAD PDF
+// =========================
 
-    const data: any = document.getElementById(
+downloadPDF() {
 
-      'receipt-content'
+  const data: any =
+    document.getElementById('receipt-content');
 
-    );
+  html2canvas(data, {
 
+    scale: 3,
 
+    useCORS: true,
 
-    html2canvas(data).then((canvas) => {
+    logging: false,
 
-      const imgWidth = 190;
+    backgroundColor: '#ffffff'
 
-      const imgHeight =
+  }).then((canvas) => {
 
-        canvas.height * imgWidth / canvas.width;
+    // THERMAL RECEIPT WIDTH
 
+    const pageWidth = 58;
 
+    const imgWidth = 52;
 
-      const contentData = canvas.toDataURL(
+    const imgHeight =
+      canvas.height * imgWidth / canvas.width;
 
-        'image/png'
+    // IMAGE DATA
 
-      );
+    const contentData =
+      canvas.toDataURL('image/png');
 
+    // CREATE PDF
 
+    const pdf = new jsPDF({
 
-      const pdf = new jsPDF(
+      orientation: 'portrait',
 
-        'p',
+      unit: 'mm',
 
-        'mm',
-
-        'a4'
-
-      );
-
-
-
-      pdf.addImage(
-
-        contentData,
-
-        'PNG',
-
-        10,
-
-        10,
-
-        imgWidth,
-
-        imgHeight
-
-      );
-
-
-
-      pdf.save(
-
-        `receipt-${this.receiptForm.value.serialNo}.pdf`
-
-      );
+      format: [58, imgHeight + 10]
 
     });
 
-  }
+    // ADD IMAGE
+
+    pdf.addImage(
+
+      contentData,
+
+      'PNG',
+
+      3,
+
+      3,
+
+      imgWidth,
+
+      imgHeight
+
+    );
+
+    // SAVE PDF
+
+    pdf.save(
+
+      `receipt-${this.receiptForm.value.serialNo}.pdf`
+
+    );
+
+  })
+
+  .catch((error) => {
+
+    console.log(error);
+
+    alert('PDF Generate Failed');
+
+  });
+
+}
 
 }
