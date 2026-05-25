@@ -104,6 +104,10 @@ export class AddReceiptComponent {
 
 
 
+    // =========================
+    // FORM VALIDATION
+    // =========================
+
     if (this.receiptForm.invalid) {
 
       alert(
@@ -120,6 +124,10 @@ export class AddReceiptComponent {
 
 
 
+    // =========================
+    // SAVE RECEIPT API
+    // =========================
+
     this.receipt
     .addReceipt(this.receiptForm.value)
     .subscribe({
@@ -135,103 +143,18 @@ export class AddReceiptComponent {
 
 
         // =========================
-        // WHATSAPP MESSAGE
+        // SUCCESS MESSAGE
         // =========================
 
-        const customerName =
-          this.receiptForm.value.customerName;
-
-        const serialNo =
-          this.receiptForm.value.serialNo;
-
-        const repairMaterial =
-          this.receiptForm.value.repairMaterial;
-
-        const repairStatus =
-          this.receiptForm.value.repairStatus;
-
-        const mobileNo =
-          this.receiptForm.value.mobileNo;
-
-        const cost =
-          this.receiptForm.value.cost || 0;
-
-
-
-        const whatsappMessage = `
-
-🔧 *SONAM ELECTRONICS*
-
-Hello ${customerName},
-
-Your repair receipt has been created successfully ✅
-
-━━━━━━━━━━━━━━
-
-🧾 Serial No : ${serialNo}
-
-📦 Repair Item : ${repairMaterial}
-
-💰 Cost : ₹${cost}
-
-📌 Status : ${repairStatus}
-
-━━━━━━━━━━━━━━
-
-मराठी:
-खाली दिलेल्या लिंकवर क्लिक करून रिपेअर स्टेटस तपासा.
-
-English:
-Click the link below to check repair status.
-
-ગુજરાતી:
-નીચે આપેલી લિંક પર ક્લિક કરીને રિપેર સ્ટેટસ ચેક કરો.
-
-हिन्दी:
-नीचे दिए गए लिंक पर क्लिक करके रिपेयर स्टेटस चेक करें।
-
-🔗 https://sonamagency.in/
-
-━━━━━━━━━━━━━━
-
-⚠️ Important Notice
-
-• Please collect your repaired product within 20 days.
-
-• After 20 days, storage charges may apply.
-
-• Products not collected within 30 days may be treated as scrap.
-
-🙏 Thank you for visiting again.
-
-`;
-
-
-
-        // OPEN WHATSAPP
-
-        const whatsappURL =
-
-          `https://wa.me/91${mobileNo}?text=${encodeURIComponent(
-            whatsappMessage
-          )}`;
-
-
-
-        window.open(
-          whatsappURL,
-          '_blank'
-        );
-
-
-
         alert(
-          'Receipt Saved Successfully'
+          'Receipt Saved & WhatsApp Message Sent Successfully'
         );
 
 
 
+        // =========================
         // RESET FORM
+        // =========================
 
         this.receiptForm.reset({
 
