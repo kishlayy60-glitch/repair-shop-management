@@ -38,10 +38,6 @@ export class AddReceiptComponent {
 
   loading = false;
 
-
-
-  // CURRENT DATE
-
   currentDate = new Date();
 
 
@@ -52,10 +48,6 @@ export class AddReceiptComponent {
   ) {
 
     this.receiptForm = this.fb.group({
-
-      // =========================
-      // REQUIRED
-      // =========================
 
       serialNo: [
         '',
@@ -72,20 +64,7 @@ export class AddReceiptComponent {
         Validators.required
       ],
 
-
-
-      // =========================
-      // DESCRIPTION OPTIONAL
-      // =========================
-
       description: [''],
-
-
-
-      // =========================
-      // MOBILE VALIDATION
-      // ONLY 10 DIGITS
-      // =========================
 
       mobileNo: [
         '',
@@ -95,29 +74,11 @@ export class AddReceiptComponent {
         ]
       ],
 
-
-
-      // =========================
-      // OPTIONAL FIELDS
-      // =========================
-
       cost: [''],
 
       repairBy: [''],
 
-
-
-      // =========================
-      // STATUS
-      // =========================
-
       repairStatus: ['Pending'],
-
-
-
-      // =========================
-      // AUTO DATE
-      // =========================
 
       receiptDate: [
         new Date().toLocaleDateString()
@@ -142,8 +103,6 @@ export class AddReceiptComponent {
     console.log(this.receiptForm.value);
 
 
-
-    // FORM VALIDATION
 
     if (this.receiptForm.invalid) {
 
@@ -173,7 +132,102 @@ export class AddReceiptComponent {
 
         this.loading = false;
 
-        alert('Receipt Saved Successfully');
+
+
+        // =========================
+        // WHATSAPP MESSAGE
+        // =========================
+
+        const customerName =
+          this.receiptForm.value.customerName;
+
+        const serialNo =
+          this.receiptForm.value.serialNo;
+
+        const repairMaterial =
+          this.receiptForm.value.repairMaterial;
+
+        const repairStatus =
+          this.receiptForm.value.repairStatus;
+
+        const mobileNo =
+          this.receiptForm.value.mobileNo;
+
+        const cost =
+          this.receiptForm.value.cost || 0;
+
+
+
+        const whatsappMessage = `
+
+🔧 *SONAM ELECTRONICS*
+
+Hello ${customerName},
+
+Your repair receipt has been created successfully ✅
+
+━━━━━━━━━━━━━━
+
+🧾 Serial No : ${serialNo}
+
+📦 Repair Item : ${repairMaterial}
+
+💰 Cost : ₹${cost}
+
+📌 Status : ${repairStatus}
+
+━━━━━━━━━━━━━━
+
+मराठी:
+खाली दिलेल्या लिंकवर क्लिक करून रिपेअर स्टेटस तपासा.
+
+English:
+Click the link below to check repair status.
+
+ગુજરાતી:
+નીચે આપેલી લિંક પર ક્લિક કરીને રિપેર સ્ટેટસ ચેક કરો.
+
+हिन्दी:
+नीचे दिए गए लिंक पर क्लिक करके रिपेयर स्टेटस चेक करें।
+
+🔗 https://sonamagency.in/
+
+━━━━━━━━━━━━━━
+
+⚠️ Important Notice
+
+• Please collect your repaired product within 20 days.
+
+• After 20 days, storage charges may apply.
+
+• Products not collected within 30 days may be treated as scrap.
+
+🙏 Thank you for visiting again.
+
+`;
+
+
+
+        // OPEN WHATSAPP
+
+        const whatsappURL =
+
+          `https://wa.me/91${mobileNo}?text=${encodeURIComponent(
+            whatsappMessage
+          )}`;
+
+
+
+        window.open(
+          whatsappURL,
+          '_blank'
+        );
+
+
+
+        alert(
+          'Receipt Saved Successfully'
+        );
 
 
 
@@ -231,21 +285,15 @@ export class AddReceiptComponent {
   printReceipt() {
 
     const printContents = document.getElementById(
-
       'receipt-content'
-
     )?.innerHTML;
 
 
 
     const popupWindow = window.open(
-
       '',
-
       '_blank',
-
       'width=800,height=600'
-
     );
 
 
@@ -265,25 +313,17 @@ export class AddReceiptComponent {
           <style>
 
             body{
-
               font-family: Arial;
-
               padding: 20px;
-
             }
 
             h2,h3{
-
               text-align:center;
-
             }
 
             p{
-
               font-size:18px;
-
               margin:10px 0;
-
             }
 
           </style>
@@ -314,89 +354,81 @@ export class AddReceiptComponent {
   // DOWNLOAD PDF
   // =========================
 
-  // =========================
-// DOWNLOAD PDF
-// =========================
+  downloadPDF() {
 
-downloadPDF() {
+    const data: any =
+      document.getElementById('receipt-content');
 
-  const data: any =
-    document.getElementById('receipt-content');
+    html2canvas(data, {
 
-  html2canvas(data, {
+      scale: 3,
 
-    scale: 3,
+      useCORS: true,
 
-    useCORS: true,
+      logging: false,
 
-    logging: false,
+      backgroundColor: '#ffffff'
 
-    backgroundColor: '#ffffff'
+    }).then((canvas) => {
 
-  }).then((canvas) => {
+      const imgWidth = 52;
 
-    // THERMAL RECEIPT WIDTH
+      const imgHeight =
+        canvas.height * imgWidth / canvas.width;
 
-    const pageWidth = 58;
 
-    const imgWidth = 52;
 
-    const imgHeight =
-      canvas.height * imgWidth / canvas.width;
+      const contentData =
+        canvas.toDataURL('image/png');
 
-    // IMAGE DATA
 
-    const contentData =
-      canvas.toDataURL('image/png');
 
-    // CREATE PDF
+      const pdf = new jsPDF({
 
-    const pdf = new jsPDF({
+        orientation: 'portrait',
 
-      orientation: 'portrait',
+        unit: 'mm',
 
-      unit: 'mm',
+        format: [58, imgHeight + 10]
 
-      format: [58, imgHeight + 10]
+      });
+
+
+
+      pdf.addImage(
+
+        contentData,
+
+        'PNG',
+
+        3,
+
+        3,
+
+        imgWidth,
+
+        imgHeight
+
+      );
+
+
+
+      pdf.save(
+
+        `receipt-${this.receiptForm.value.serialNo}.pdf`
+
+      );
+
+    })
+
+    .catch((error) => {
+
+      console.log(error);
+
+      alert('PDF Generate Failed');
 
     });
 
-    // ADD IMAGE
-
-    pdf.addImage(
-
-      contentData,
-
-      'PNG',
-
-      3,
-
-      3,
-
-      imgWidth,
-
-      imgHeight
-
-    );
-
-    // SAVE PDF
-
-    pdf.save(
-
-      `receipt-${this.receiptForm.value.serialNo}.pdf`
-
-    );
-
-  })
-
-  .catch((error) => {
-
-    console.log(error);
-
-    alert('PDF Generate Failed');
-
-  });
-
-}
+  }
 
 }

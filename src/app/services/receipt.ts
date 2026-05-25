@@ -10,13 +10,23 @@ import { Observable } from 'rxjs';
 
 export class Receipt {
 
+  // =========================
+  // API URL
+  // =========================
+
   apiUrl = 'https://repair-shop-management.onrender.com';
+
+
 
   constructor(
     private http: HttpClient
   ) {}
 
+
+
+  // =========================
   // ADD RECEIPT
+  // =========================
 
   addReceipt(data: any): Observable<any> {
 
@@ -30,7 +40,11 @@ export class Receipt {
 
   }
 
+
+
+  // =========================
   // GET SINGLE RECEIPT
+  // =========================
 
   getReceipt(serialNo: string): Observable<any> {
 
@@ -42,9 +56,15 @@ export class Receipt {
 
   }
 
-  // GET RECEIPTS BY MOBILE
 
-  getReceiptByMobile(mobileNo: string): Observable<any> {
+
+  // =========================
+  // GET RECEIPT BY MOBILE
+  // =========================
+
+  getReceiptByMobile(
+    mobileNo: string
+  ): Observable<any> {
 
     return this.http.get<any>(
 
@@ -54,7 +74,11 @@ export class Receipt {
 
   }
 
+
+
+  // =========================
   // GET ALL RECEIPTS
+  // =========================
 
   getAllReceipts(): Observable<any> {
 
@@ -66,7 +90,11 @@ export class Receipt {
 
   }
 
+
+
+  // =========================
   // UPDATE RECEIPT STATUS
+  // =========================
 
   updateReceiptStatus(
 
@@ -92,7 +120,11 @@ export class Receipt {
 
   }
 
+
+
+  // =========================
   // EDIT RECEIPT
+  // =========================
 
   editReceipt(
 
@@ -112,13 +144,37 @@ export class Receipt {
 
   }
 
-  // DELETE RECEIPT
 
-  deleteReceipt(id: string): Observable<any> {
+
+  // =========================
+  // DELETE RECEIPT
+  // =========================
+
+  deleteReceipt(
+    id: string
+  ): Observable<any> {
 
     return this.http.delete<any>(
 
       `${this.apiUrl}/delete-receipt/${id}`
+
+    );
+
+  }
+
+
+
+  // =========================
+  // SEND WHATSAPP MESSAGE
+  // =========================
+
+  sendWhatsAppMessage(data: any): Observable<any> {
+
+    return this.http.post<any>(
+
+      `${this.apiUrl}/send-whatsapp-message`,
+
+      data
 
     );
 

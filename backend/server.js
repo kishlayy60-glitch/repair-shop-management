@@ -39,14 +39,54 @@ mongoose.connect(process.env.MONGO_URL)
 
 
 // =====================================
-// META WHATSAPP FUNCTION
+// WHATSAPP MESSAGE FUNCTION
 // =====================================
 
 async function sendWhatsAppMessage(data) {
 
   try {
 
-    const cleanNumber = data.mobileNo.toString().replace(/\D/g, '');
+    const cleanNumber =
+      data.mobileNo.toString().replace(/\D/g, '');
+
+    // =====================================
+    // WHATSAPP MESSAGE TEXT
+    // =====================================
+
+    const message = `
+
+🔧 SONAM ELECTRONICS
+
+Hello ${data.customerName},
+
+Your repair receipt has been created successfully.
+
+━━━━━━━━━━━━━━━
+
+🧾 Receipt No : ${data.serialNo}
+
+📱 Mobile : ${data.mobileNo}
+
+🛠 Repair Item : ${data.repairMaterial}
+
+📌 Status : ${data.repairStatus}
+
+💰 Cost : ₹${data.cost || 0}
+
+📅 Date : ${data.receiptDate}
+
+━━━━━━━━━━━━━━━
+
+🌐 Check Repair Status:
+https://sonamagency.in
+
+Thank you for visiting Sonam Electronics 🙏
+
+`;
+
+    // =====================================
+    // SEND WHATSAPP MESSAGE
+    // =====================================
 
     await axios.post(
 
@@ -58,79 +98,11 @@ async function sendWhatsAppMessage(data) {
 
         to: `91${cleanNumber}`,
 
-        type: "template",
+        type: "text",
 
-        template: {
+        text: {
 
-          name: "repair_receipt",
-
-          language: {
-
-            code: "en"
-
-          },
-
-          components: [
-
-            {
-
-              type: "body",
-
-              parameters: [
-
-                {
-
-                  type: "text",
-
-                  text: data.customerName
-
-                },
-
-                {
-
-                  type: "text",
-
-                  text: data.serialNo
-
-                },
-
-                {
-
-                  type: "text",
-
-                  text: data.repairMaterial
-
-                },
-
-                {
-
-                  type: "text",
-
-                  text: data.repairStatus
-
-                },
-
-                {
-
-                  type: "text",
-
-                  text: String(data.cost || 0)
-
-                },
-
-                {
-
-                  type: "text",
-
-                  text: data.receiptDate || ''
-
-                }
-
-              ]
-
-            }
-
-          ]
+          body: message
 
         }
 
@@ -140,9 +112,11 @@ async function sendWhatsAppMessage(data) {
 
         headers: {
 
-          Authorization: `Bearer ${process.env.WHATSAPP_TOKEN}`,
+          Authorization:
+            `Bearer ${process.env.WHATSAPP_TOKEN}`,
 
-          "Content-Type": "application/json"
+          "Content-Type":
+            "application/json"
 
         }
 
@@ -150,7 +124,7 @@ async function sendWhatsAppMessage(data) {
 
     );
 
-    console.log('WhatsApp Template Message Sent');
+    console.log('WhatsApp Message Sent');
 
   }
 
@@ -158,7 +132,13 @@ async function sendWhatsAppMessage(data) {
 
     console.log('WhatsApp Error');
 
-    console.log(error.response?.data || error.message);
+    console.log(
+
+      error.response?.data ||
+
+      error.message
+
+    );
 
   }
 
@@ -188,56 +168,86 @@ app.post('/add-receipt', async (req, res) => {
 
     const receipt = new Receipt({
 
-      serialNo: req.body.serialNo,
+      serialNo:
+        req.body.serialNo,
 
-      customerName: req.body.customerName,
+      customerName:
+        req.body.customerName,
 
-      mobileNo: req.body.mobileNo,
+      mobileNo:
+        req.body.mobileNo,
 
-      repairMaterial: req.body.repairMaterial,
+      repairMaterial:
+        req.body.repairMaterial,
 
-      description: req.body.description || '',
+      description:
+        req.body.description || '',
 
-      cost: req.body.cost || 0,
+      cost:
+        req.body.cost || 0,
 
-      repairBy: req.body.repairBy || '',
+      repairBy:
+        req.body.repairBy || '',
 
-      repairStatus: req.body.repairStatus,
+      repairStatus:
+        req.body.repairStatus,
 
-      receiptDate: req.body.receiptDate,
+      receiptDate:
+        req.body.receiptDate,
 
-      itemReceivedDate: req.body.itemReceivedDate || ''
+      itemReceivedDate:
+        req.body.itemReceivedDate || ''
 
     });
 
+
+    // =====================================
+    // SAVE RECEIPT
+    // =====================================
 
     await receipt.save();
 
 
+    // =====================================
+    // SEND WHATSAPP MESSAGE
+    // =====================================
+
     await sendWhatsAppMessage({
 
-      mobileNo: req.body.mobileNo,
+      mobileNo:
+        req.body.mobileNo,
 
-      customerName: req.body.customerName,
+      customerName:
+        req.body.customerName,
 
-      serialNo: req.body.serialNo,
+      serialNo:
+        req.body.serialNo,
 
-      repairMaterial: req.body.repairMaterial,
+      repairMaterial:
+        req.body.repairMaterial,
 
-      repairStatus: req.body.repairStatus,
+      repairStatus:
+        req.body.repairStatus,
 
-      cost: req.body.cost,
+      cost:
+        req.body.cost,
 
-      receiptDate: req.body.receiptDate
+      receiptDate:
+        req.body.receiptDate
 
     });
 
+
+    // =====================================
+    // RESPONSE
+    // =====================================
 
     res.status(201).json({
 
       success: true,
 
-      message: 'Receipt Saved Successfully',
+      message:
+        'Receipt Saved Successfully',
 
       data: receipt
 
@@ -263,18 +273,22 @@ app.post('/add-receipt', async (req, res) => {
 
 
 // =====================================
-// GET SINGLE RECEIPT BY SERIAL
+// GET SINGLE RECEIPT
 // =====================================
 
-app.get('/get-receipt/:serialNo', async (req, res) => {
+app.get('/get-receipt/:serialNo',
+
+async (req, res) => {
 
   try {
 
-    const receipt = await Receipt.findOne({
+    const receipt =
+      await Receipt.findOne({
 
-      serialNo: req.params.serialNo
+        serialNo:
+          req.params.serialNo
 
-    });
+      });
 
     if (!receipt) {
 
@@ -282,7 +296,8 @@ app.get('/get-receipt/:serialNo', async (req, res) => {
 
         success: false,
 
-        message: 'Receipt Not Found'
+        message:
+          'Receipt Not Found'
 
       });
 
@@ -316,20 +331,28 @@ app.get('/get-receipt/:serialNo', async (req, res) => {
 
 
 // =====================================
-// GET RECEIPTS BY MOBILE NUMBER
+// GET RECEIPTS BY MOBILE
 // =====================================
 
-app.get('/get-receipt-mobile/:mobileNo', async (req, res) => {
+app.get('/get-receipt-mobile/:mobileNo',
+
+async (req, res) => {
 
   try {
 
-    const receipts = await Receipt.find({
+    const receipts =
+      await Receipt.find({
 
-      mobileNo: req.params.mobileNo
+        mobileNo:
+          req.params.mobileNo
 
-    })
+      })
 
-    .sort({ createdAt: -1 });
+      .sort({
+
+        createdAt: -1
+
+      });
 
     if(receipts.length === 0) {
 
@@ -337,7 +360,8 @@ app.get('/get-receipt-mobile/:mobileNo', async (req, res) => {
 
         success: false,
 
-        message: 'No Receipt Found'
+        message:
+          'No Receipt Found'
 
       });
 
@@ -348,7 +372,8 @@ app.get('/get-receipt-mobile/:mobileNo', async (req, res) => {
 
     receipts.forEach((item) => {
 
-      totalCost += Number(item.cost || 0);
+      totalCost +=
+        Number(item.cost || 0);
 
     });
 
@@ -386,13 +411,20 @@ app.get('/get-receipt-mobile/:mobileNo', async (req, res) => {
 // GET ALL RECEIPTS
 // =====================================
 
-app.get('/all-receipts', async (req, res) => {
+app.get('/all-receipts',
+
+async (req, res) => {
 
   try {
 
-    const receipts = await Receipt.find()
+    const receipts =
+      await Receipt.find()
 
-    .sort({ createdAt: -1 });
+      .sort({
+
+        createdAt: -1
+
+      });
 
     res.status(200).json({
 
@@ -425,23 +457,29 @@ app.get('/all-receipts', async (req, res) => {
 // UPDATE RECEIPT STATUS
 // =====================================
 
-app.put('/update-receipt/:serialNo', async (req, res) => {
+app.put('/update-receipt/:serialNo',
+
+async (req, res) => {
 
   try {
 
-    const updatedReceipt = await Receipt.findOneAndUpdate(
+    const updatedReceipt =
+      await Receipt.findOneAndUpdate(
 
       {
 
-        serialNo: req.params.serialNo
+        serialNo:
+          req.params.serialNo
 
       },
 
       {
 
-        repairStatus: req.body.repairStatus,
+        repairStatus:
+          req.body.repairStatus,
 
-        itemReceivedDate: req.body.itemReceivedDate
+        itemReceivedDate:
+          req.body.itemReceivedDate
 
       },
 
@@ -459,28 +497,40 @@ app.put('/update-receipt/:serialNo', async (req, res) => {
 
         success: false,
 
-        message: 'Receipt Not Found'
+        message:
+          'Receipt Not Found'
 
       });
 
     }
 
 
+    // =====================================
+    // SEND UPDATED STATUS MESSAGE
+    // =====================================
+
     await sendWhatsAppMessage({
 
-      mobileNo: updatedReceipt.mobileNo,
+      mobileNo:
+        updatedReceipt.mobileNo,
 
-      customerName: updatedReceipt.customerName,
+      customerName:
+        updatedReceipt.customerName,
 
-      serialNo: updatedReceipt.serialNo,
+      serialNo:
+        updatedReceipt.serialNo,
 
-      repairMaterial: updatedReceipt.repairMaterial,
+      repairMaterial:
+        updatedReceipt.repairMaterial,
 
-      repairStatus: updatedReceipt.repairStatus,
+      repairStatus:
+        updatedReceipt.repairStatus,
 
-      cost: updatedReceipt.cost,
+      cost:
+        updatedReceipt.cost,
 
-      receiptDate: updatedReceipt.receiptDate
+      receiptDate:
+        updatedReceipt.receiptDate
 
     });
 
@@ -489,7 +539,8 @@ app.put('/update-receipt/:serialNo', async (req, res) => {
 
       success: true,
 
-      message: 'Receipt Status Updated',
+      message:
+        'Receipt Status Updated',
 
       data: updatedReceipt
 
@@ -518,35 +569,47 @@ app.put('/update-receipt/:serialNo', async (req, res) => {
 // EDIT RECEIPT
 // =====================================
 
-app.put('/edit-receipt/:serialNo', async (req, res) => {
+app.put('/edit-receipt/:serialNo',
+
+async (req, res) => {
 
   try {
 
-    const updatedReceipt = await Receipt.findOneAndUpdate(
+    const updatedReceipt =
+      await Receipt.findOneAndUpdate(
 
       {
 
-        serialNo: req.params.serialNo
+        serialNo:
+          req.params.serialNo
 
       },
 
       {
 
-        customerName: req.body.customerName,
+        customerName:
+          req.body.customerName,
 
-        mobileNo: req.body.mobileNo,
+        mobileNo:
+          req.body.mobileNo,
 
-        repairMaterial: req.body.repairMaterial,
+        repairMaterial:
+          req.body.repairMaterial,
 
-        description: req.body.description,
+        description:
+          req.body.description,
 
-        cost: req.body.cost,
+        cost:
+          req.body.cost,
 
-        repairBy: req.body.repairBy,
+        repairBy:
+          req.body.repairBy,
 
-        repairStatus: req.body.repairStatus,
+        repairStatus:
+          req.body.repairStatus,
 
-        itemReceivedDate: req.body.itemReceivedDate
+        itemReceivedDate:
+          req.body.itemReceivedDate
 
       },
 
@@ -564,7 +627,8 @@ app.put('/edit-receipt/:serialNo', async (req, res) => {
 
         success: false,
 
-        message: 'Receipt Not Found'
+        message:
+          'Receipt Not Found'
 
       });
 
@@ -574,7 +638,8 @@ app.put('/edit-receipt/:serialNo', async (req, res) => {
 
       success: true,
 
-      message: 'Receipt Updated Successfully',
+      message:
+        'Receipt Updated Successfully',
 
       data: updatedReceipt
 
@@ -603,15 +668,18 @@ app.put('/edit-receipt/:serialNo', async (req, res) => {
 // DELETE RECEIPT
 // =====================================
 
-app.delete('/delete-receipt/:id', async (req, res) => {
+app.delete('/delete-receipt/:id',
+
+async (req, res) => {
 
   try {
 
-    const deletedReceipt = await Receipt.findByIdAndDelete(
+    const deletedReceipt =
+      await Receipt.findByIdAndDelete(
 
-      req.params.id
+        req.params.id
 
-    );
+      );
 
     if (!deletedReceipt) {
 
@@ -619,7 +687,8 @@ app.delete('/delete-receipt/:id', async (req, res) => {
 
         success: false,
 
-        message: 'Receipt Not Found'
+        message:
+          'Receipt Not Found'
 
       });
 
@@ -629,7 +698,8 @@ app.delete('/delete-receipt/:id', async (req, res) => {
 
       success: true,
 
-      message: 'Receipt Deleted Successfully'
+      message:
+        'Receipt Deleted Successfully'
 
     });
 
@@ -656,10 +726,15 @@ app.delete('/delete-receipt/:id', async (req, res) => {
 // SERVER
 // =====================================
 
-const PORT = process.env.PORT || 3000;
+const PORT =
+  process.env.PORT || 3000;
 
 app.listen(PORT, () => {
 
-  console.log(`Server Running On Port ${PORT}`);
+  console.log(
+
+    `Server Running On Port ${PORT}`
+
+  );
 
 });
