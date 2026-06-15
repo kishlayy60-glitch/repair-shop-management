@@ -27,8 +27,6 @@ export class Navbar {
 
   }
 
-
-
   // =========================
   // CHECK LOGIN
   // =========================
@@ -41,8 +39,6 @@ export class Navbar {
 
   }
 
-
-
   // =========================
   // LOGOUT
   // =========================
@@ -50,22 +46,16 @@ export class Navbar {
   logout() {
 
     const confirmLogout = confirm(
-
       'Are you sure you want to logout?'
-
     );
 
-
-
-    if(confirmLogout) {
+    if (confirmLogout) {
 
       localStorage.removeItem('admin');
 
+      // REDIRECT TO SECRET LOGIN PAGE
 
-
-      this.router.navigate(['/login']);
-
-
+      this.router.navigate(['/sonam-admin-2026']);
 
       setTimeout(() => {
 

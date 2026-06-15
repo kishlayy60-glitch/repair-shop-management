@@ -190,7 +190,7 @@ Click the link below to check repair status.
 हिन्दी:
 नीचे दिए गए लिंक पर क्लिक करके रिपेयर स्टेटस चेक करें।
 
-🔗 https://sonamagency.in/
+🔗 https://service.sonamagency.in/
 
 ━━━━━━━━━━━━━━
 

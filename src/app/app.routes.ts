@@ -19,11 +19,12 @@ export const routes: Routes = [
 
 
   // =====================================
-  // LOGIN PAGE
+  // SECRET ADMIN LOGIN PAGE
   // =====================================
 
   {
-    path: 'login',
+    path: 'sonam-admin-2026',
+
     loadComponent: () =>
       import('./pages/login/login')
       .then((m) => m.Login)
@@ -36,12 +37,14 @@ export const routes: Routes = [
   // =====================================
 
   {
-  path: 'dashboard',
-  loadComponent: () =>
-    import('./pages/dashboard/dashboard')
-    .then((m) => m.Dashboard),
-  canActivate: [authGuard]
-},
+    path: 'dashboard',
+
+    loadComponent: () =>
+      import('./pages/dashboard/dashboard')
+      .then((m) => m.Dashboard),
+
+    canActivate: [authGuard]
+  },
 
 
 

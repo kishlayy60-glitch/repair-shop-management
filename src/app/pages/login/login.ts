@@ -26,8 +26,6 @@ export class Login {
     private router: Router
   ) {}
 
-
-
   // =========================
   // LOGIN FUNCTION
   // =========================
@@ -36,53 +34,36 @@ export class Login {
 
     this.loading = true;
 
-
-
     // ADMIN LOGIN
 
-    if(
-
+    if (
       this.email === 'admin@gmail.com'
-
       &&
-
       this.password === '1234'
-
     ) {
 
       // SAVE LOGIN SESSION
 
       localStorage.setItem('admin', 'true');
 
-
-
       alert('Login Successful');
-
-
 
       // REDIRECT
 
       this.router.navigate(['/add-receipt']);
 
-
-
       // REFRESH NAVBAR
 
       setTimeout(() => {
-
         window.location.reload();
-
       }, 500);
 
     }
-
     else {
 
       alert('Invalid Email or Password');
 
     }
-
-
 
     this.loading = false;
 

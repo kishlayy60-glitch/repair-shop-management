@@ -78,7 +78,7 @@ Your repair receipt has been created successfully.
 ━━━━━━━━━━━━━━━
 
 🌐 Check Repair Status:
-https://sonamagency.in
+https://service.sonamagency.in
 
 Thank you for visiting Sonam Electronics 🙏
 

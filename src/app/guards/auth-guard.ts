@@ -10,23 +10,19 @@ export const authGuard: CanActivateFn = (route, state) => {
 
   const isLoggedIn = localStorage.getItem('admin');
 
-
-
   // IF LOGGED IN
 
-  if(isLoggedIn) {
+  if (isLoggedIn) {
 
     return true;
 
   }
 
-
-
   // IF NOT LOGGED IN
 
   else {
 
-    router.navigate(['/login']);
+    router.navigate(['/sonam-admin-2026']);
 
     return false;
 
