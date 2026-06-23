@@ -162,7 +162,7 @@
 
         <th>Status</th>
 
-        <th>Item Received Date</th>
+        <th>Item Received</th>
 
         <th>Action</th>
 
@@ -237,14 +237,61 @@
 
         <!-- ITEM RECEIVED DATE -->
 
-        <td>
+       <td>
 
-          <input
-            type="date"
-            [(ngModel)]="item.itemReceivedDate"
-          >
+  <!-- Customer Request Nahi Aayi -->
 
-        </td>
+  <span
+    *ngIf="!item.receivedRequest"
+    style="color:red;font-weight:bold;"
+  >
+    No Request
+  </span>
+
+  <!-- Customer Request Aayi -->
+
+  <div *ngIf="item.receivedRequest && item.itemReceived !== 'Yes'">
+
+    <button
+      class="yes-btn"
+      (click)="approveReceived(item)"
+    >
+      YES
+    </button>
+
+    <button
+      class="no-btn"
+      (click)="rejectReceived(item)"
+    >
+      NO
+    </button>
+
+  </div>
+
+  <!-- Admin Approved -->
+
+  <div *ngIf="item.itemReceived === 'Yes'">
+
+    <span
+      style="
+      color:green;
+      font-weight:bold;
+      "
+    >
+      Received
+    </span>
+
+    <br>
+
+    <small>
+
+      {{ item.itemReceivedDate }}
+
+    </small>
+
+  </div>
+
+</td>
 
 
         <!-- ACTION -->

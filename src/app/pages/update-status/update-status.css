@@ -419,3 +419,21 @@ button{
   }
 
 }
+.yes-btn{
+  background:#28a745;
+  color:#fff;
+  border:none;
+  padding:6px 12px;
+  margin-right:5px;
+  cursor:pointer;
+  border-radius:4px;
+}
+
+.no-btn{
+  background:#dc3545;
+  color:#fff;
+  border:none;
+  padding:6px 12px;
+  cursor:pointer;
+  border-radius:4px;
+}

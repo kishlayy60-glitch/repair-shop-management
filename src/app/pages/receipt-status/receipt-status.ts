@@ -33,27 +33,15 @@ export class ReceiptStatus {
     private receiptService: Receipt
   ) {}
 
-
-
   // =========================
   // CHECK STATUS
   // =========================
 
   checkStatus() {
 
-    // RESET OLD DATA
-
     this.receipt = null;
-
     this.receipts = [];
-
     this.totalCost = 0;
-
-
-
-    // =========================
-    // SEARCH BY SERIAL
-    // =========================
 
     if(this.serialNo.trim() !== '') {
 
@@ -63,17 +51,14 @@ export class ReceiptStatus {
 
         next: (res: any) => {
 
-          console.log(res);
-
           this.receipt = res.data;
 
-          this.totalCost = Number(this.receipt.cost);
+          this.totalCost =
+            Number(this.receipt.cost);
 
         },
 
-        error: (err: any) => {
-
-          console.log(err);
+        error: () => {
 
           alert('Receipt Not Found');
 
@@ -83,12 +68,6 @@ export class ReceiptStatus {
 
     }
 
-
-
-    // =========================
-    // SEARCH BY MOBILE
-    // =========================
-
     else if(this.mobileNo.trim() !== '') {
 
       this.receiptService
@@ -97,17 +76,14 @@ export class ReceiptStatus {
 
         next: (res: any) => {
 
-          console.log(res);
-
           this.receipts = res.data;
 
-          this.totalCost = res.totalCost;
+          this.totalCost =
+            res.totalCost;
 
         },
 
-        error: (err: any) => {
-
-          console.log(err);
+        error: () => {
 
           alert('No Receipt Found');
 
@@ -117,17 +93,57 @@ export class ReceiptStatus {
 
     }
 
-
-
-    // =========================
-    // EMPTY INPUT
-    // =========================
-
     else {
 
-      alert('Enter Serial No or Mobile No');
+      alert(
+        'Enter Serial No or Mobile No'
+      );
 
     }
+
+  }
+
+  // =========================
+  // CUSTOMER RECEIVED BUTTON
+  // =========================
+
+  markReceived(item: any) {
+
+    if(
+      !confirm(
+        'Have you received your repaired item?'
+      )
+    ) {
+      return;
+    }
+
+    this.receiptService
+    .customerReceived(
+      item.serialNo
+    )
+    .subscribe({
+
+      next: (res: any) => {
+
+        alert(
+          'Request sent to admin successfully'
+        );
+
+        item.receivedRequest = true;
+
+      },
+
+      error: (err: any) => {
+
+        console.log(err);
+
+        alert(
+          'Unable to send request'
+        );
+
+      }
+
+    });
 
   }
 

@@ -16,8 +16,6 @@ const receiptSchema = new mongoose.Schema(
 
     },
 
-
-
     customerName: {
 
       type: String,
@@ -27,8 +25,6 @@ const receiptSchema = new mongoose.Schema(
       trim: true
 
     },
-
-
 
     mobileNo: {
 
@@ -40,8 +36,6 @@ const receiptSchema = new mongoose.Schema(
 
     },
 
-
-
     repairMaterial: {
 
       type: String,
@@ -51,10 +45,6 @@ const receiptSchema = new mongoose.Schema(
       trim: true
 
     },
-
-
-
-    // DESCRIPTION OPTIONAL
 
     description: {
 
@@ -66,10 +56,6 @@ const receiptSchema = new mongoose.Schema(
 
     },
 
-
-
-    // OPTIONAL
-
     cost: {
 
       type: Number,
@@ -77,10 +63,6 @@ const receiptSchema = new mongoose.Schema(
       default: 0
 
     },
-
-
-
-    // OPTIONAL
 
     repairBy: {
 
@@ -91,8 +73,6 @@ const receiptSchema = new mongoose.Schema(
       trim: true
 
     },
-
-
 
     repairStatus: {
 
@@ -110,10 +90,6 @@ const receiptSchema = new mongoose.Schema(
 
     },
 
-
-
-    // RECEIPT DATE
-
     receiptDate: {
 
       type: String,
@@ -122,9 +98,27 @@ const receiptSchema = new mongoose.Schema(
 
     },
 
+    // CUSTOMER RECEIVED REQUEST
 
+    receivedRequest: {
 
-    // ITEM RECEIVED DATE
+      type: Boolean,
+
+      default: false
+
+    },
+
+    // ADMIN APPROVAL
+
+    itemReceived: {
+
+      type: String,
+
+      default: 'No'
+
+    },
+
+    // RECEIVED DATE
 
     itemReceivedDate: {
 
@@ -136,8 +130,6 @@ const receiptSchema = new mongoose.Schema(
 
   },
 
-
-
   {
 
     timestamps: true
@@ -145,8 +137,6 @@ const receiptSchema = new mongoose.Schema(
   }
 
 );
-
-
 
 module.exports = mongoose.model(
 

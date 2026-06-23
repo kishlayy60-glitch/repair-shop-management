@@ -179,5 +179,19 @@ export class Receipt {
     );
 
   }
+  customerReceived(
+  serialNo: string
+): Observable<any> {
+
+  return this.http.put<any>(
+
+    `${this.apiUrl}/customer-received/${serialNo}`,
+
+    {}
+
+  );
 
 }
+
+}
+

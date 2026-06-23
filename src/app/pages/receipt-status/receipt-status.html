@@ -153,64 +153,102 @@
 
       <thead>
 
-        <tr>
+<tr>
 
-          <th>Serial No</th>
+  <th>Serial No</th>
 
-          <th>Material / Problem</th>
+  <th>Material / Problem</th>
 
-          <th>Repair By</th>
+  <th>Repair By</th>
 
-          <th>Cost</th>
+  <th>Cost</th>
 
-          <th>Status</th>
+  <th>Status</th>
 
-        </tr>
+  <th>Item Received</th>
 
-      </thead>
+</tr>
+
+</thead>
 
 
 
       <tbody>
 
-        <tr *ngFor="let item of receipts">
+<tr *ngFor="let item of receipts">
 
-          <td>{{ item.serialNo }}</td>
+  <td>{{ item.serialNo }}</td>
 
-          <td>
+  <td>
 
-            <b>{{ item.repairMaterial }}</b>
+    <b>{{ item.repairMaterial }}</b>
 
-            <br>
+    <br>
 
-            <small *ngIf="item.description">
+    <small *ngIf="item.description">
+      {{ item.description }}
+    </small>
 
-              {{ item.description }}
+  </td>
 
-            </small>
+  <td>{{ item.repairBy }}</td>
 
-          </td>
+  <td>₹{{ item.cost }}</td>
 
-          <td>{{ item.repairBy }}</td>
+  <td>
 
-          <td>₹{{ item.cost }}</td>
+    <span
+      [ngClass]="{
+        'pending': item.repairStatus === 'Pending',
+        'completed': item.repairStatus === 'Completed'
+      }"
+    >
+      {{ item.repairStatus }}
+    </span>
 
-          <td>
+  </td>
 
-            <span
-              [ngClass]="{
-                'pending': item.repairStatus === 'Pending',
-                'completed': item.repairStatus === 'Completed'
-              }"
-            >
-              {{ item.repairStatus }}
-            </span>
+  <td>
 
-          </td>
+    <!-- COMPLETED HONE PAR BUTTON -->
 
-        </tr>
+    <button
+      *ngIf="
+        item.repairStatus === 'Completed' &&
+        item.itemReceived !== 'Yes'
+      "
+      class="received-btn"
+      (click)="markReceived(item)"
+    >
+      Received
+    </button>
 
-      </tbody>
+    <!-- ADMIN YES KAR DE TO -->
+
+    <span
+      *ngIf="item.itemReceived === 'Yes'"
+      class="received-text"
+    >
+      Received
+      <br>
+      {{ item.itemReceivedDate }}
+    </span>
+
+    <!-- PENDING -->
+
+    <span
+      *ngIf="
+        item.repairStatus !== 'Completed'
+      "
+    >
+      Waiting
+    </span>
+
+  </td>
+
+</tr>
+
+</tbody>
 
     </table>
 

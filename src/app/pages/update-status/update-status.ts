@@ -69,6 +69,88 @@ export class UpdateStatus implements OnInit {
 
   }
 
+
+  // =====================================
+// APPROVE RECEIVED
+// =====================================
+
+approveReceived(receipt: any) {
+
+  receipt.itemReceived = 'Yes';
+
+  receipt.itemReceivedDate =
+    new Date().toISOString().split('T')[0];
+
+  this.receiptService
+  .editReceipt(
+
+    receipt.serialNo,
+
+    receipt
+
+  )
+  .subscribe({
+
+    next: () => {
+
+      alert('Item Marked As Received');
+
+      this.loadReceipts();
+
+    },
+
+    error: (err: any) => {
+
+      console.log(err);
+
+      alert('Update Failed');
+
+    }
+
+  });
+
+}
+
+
+
+// =====================================
+// REJECT RECEIVED
+// =====================================
+
+rejectReceived(receipt: any) {
+
+  receipt.receivedRequest = false;
+
+  this.receiptService
+  .editReceipt(
+
+    receipt.serialNo,
+
+    receipt
+
+  )
+  .subscribe({
+
+    next: () => {
+
+      alert('Request Rejected');
+
+      this.loadReceipts();
+
+    },
+
+    error: (err: any) => {
+
+      console.log(err);
+
+      alert('Update Failed');
+
+    }
+
+  });
+
+}
+
   // LOAD ALL RECEIPTS
 
   loadReceipts() {

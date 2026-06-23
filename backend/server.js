@@ -605,11 +605,17 @@ async (req, res) => {
         repairBy:
           req.body.repairBy,
 
-        repairStatus:
-          req.body.repairStatus,
+       repairStatus:
+  req.body.repairStatus,
 
-        itemReceivedDate:
-          req.body.itemReceivedDate
+receivedRequest:
+  req.body.receivedRequest,
+
+itemReceived:
+  req.body.itemReceived,
+
+itemReceivedDate:
+  req.body.itemReceivedDate
 
       },
 
@@ -642,6 +648,74 @@ async (req, res) => {
         'Receipt Updated Successfully',
 
       data: updatedReceipt
+
+    });
+
+  }
+
+  catch (error) {
+
+    console.log(error);
+
+    res.status(500).json({
+
+      success: false,
+
+      message: error.message
+
+    });
+
+  }
+
+});
+
+// =====================================
+// CUSTOMER RECEIVED REQUEST
+// =====================================
+
+app.put('/customer-received/:serialNo',
+
+async (req, res) => {
+
+  try {
+
+    const receipt =
+      await Receipt.findOneAndUpdate(
+
+      {
+        serialNo: req.params.serialNo
+      },
+
+      {
+        receivedRequest: true
+      },
+
+      {
+        new: true
+      }
+
+    );
+
+    if (!receipt) {
+
+      return res.status(404).json({
+
+        success: false,
+
+        message: 'Receipt Not Found'
+
+      });
+
+    }
+
+    res.status(200).json({
+
+      success: true,
+
+      message:
+        'Received Request Sent',
+
+      data: receipt
 
     });
 
